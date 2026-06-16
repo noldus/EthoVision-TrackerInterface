@@ -1,0 +1,1010 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Common
+// Module     :   Interface
+// File       :   AdinsBaseTypesInterface.idl
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "IdtTypesInterface.idl";
+
+
+const long  g_lAdinsIdtBaseNameLength       = 120l;     // deprecated: prefer common g_culIdtNameLength
+const long  g_lAdinsIdtBaseErrorLength      = 1024l;
+
+const long  g_idAdinsIdtBaseEntityInvalid   = -1l;
+const long  g_idAdinsIdtBaseTrialInvalid    = g_idAdinsIdtBaseEntityInvalid;
+const long  g_idAdinsIdtBaseArenaInvalid    = g_idAdinsIdtBaseEntityInvalid;
+const long  g_idAdinsIdtBaseZoneInvalid     = g_idAdinsIdtBaseEntityInvalid;
+const long  g_idAdinsIdtBasePoiInvalid      = g_idAdinsIdtBaseEntityInvalid;
+const long  g_idAdinsIdtBaseSubjectInvalid  = g_idAdinsIdtBaseEntityInvalid;
+const long  g_idAdinsIdtBaseProfileInvalid  = g_idAdinsIdtBaseEntityInvalid;
+
+const long  g_lAdinsIdtBaseFeatures         = 8l;
+
+
+//  point features
+typedef enum tagEAdinsIdtBasePointType
+{
+    eAdinsIdtBasePointUndefined         = -1,
+    eAdinsIdtBasePointBegin             = 0,
+    eAdinsIdtBasePointCenter            = eAdinsIdtBasePointBegin,
+    eAdinsIdtBasePointNose              = 1,
+    eAdinsIdtBasePointTail              = 2,
+    eAdinsIdtBasePointLed               = 3,
+    eAdinsIdtBasePointReserved4         = 4,    // future use without changing interface
+    eAdinsIdtBasePointReserved5         = 5,
+    eAdinsIdtBasePointReserved6         = 6,
+    eAdinsIdtBasePointReserved7         = 7,
+    eAdinsIdtBasePointEnd
+} EAdinsIdtBasePointType;
+
+
+// scalar features
+typedef enum tagEAdinsIdtBaseScalarType
+{
+    eAdinsIdtBaseScalarUndefined        = -1,
+    eAdinsIdtBaseScalarBegin            = 0,
+    eAdinsIdtBaseScalarArea             = eAdinsIdtBaseScalarBegin,
+    eAdinsIdtBaseScalarChangedArea      = 1,
+    eAdinsIdtBaseScalarElongation       = 2,
+    eAdinsIdtBaseScalarReserved3        = 3,    // future use without changing interface
+    eAdinsIdtBaseScalarReserved4        = 4,
+    eAdinsIdtBaseScalarReserved5        = 5,
+    eAdinsIdtBaseScalarReserved6        = 6,
+    eAdinsIdtBaseScalarReserved7        = 7,
+    eAdinsIdtBaseScalarEnd
+} EAdinsIdtBaseScalarType;
+
+
+// angle features
+typedef enum tagEAdinsIdtBaseAngleType
+{
+    eAdinsIdtBaseAngleUndefined         = -1,
+    eAdinsIdtBaseAngleBegin             = 0,
+    eAdinsIdtBaseAngleViewDirection     = eAdinsIdtBaseAngleBegin,
+    eAdinsIdtBaseAngleReserved1         = 1,    // future use without changing interface
+    eAdinsIdtBaseAngleReserved2         = 2,
+    eAdinsIdtBaseAngleReserved3         = 3,
+    eAdinsIdtBaseAngleReserved4         = 4,
+    eAdinsIdtBaseAngleReserved5         = 5,
+    eAdinsIdtBaseAngleReserved6         = 6,
+    eAdinsIdtBaseAngleReserved7         = 7,
+    eAdinsIdtBaseAngleEnd
+} EAdinsIdtBaseAngleType;
+
+
+// value types
+typedef enum tagEAdinsIdtBaseValueType
+{
+    eAdinsIdtBaseVtUndefined            = -1,
+    eAdinsIdtBaseVtBool                 = 0,
+    eAdinsIdtBaseVtLongLong             = 1,
+    eAdinsIdtBaseVtDouble               = 2,
+    eAdinsIdtBaseVtDuration             = 3,
+    eAdinsIdtBaseVtTime                 = 4,
+    eAdinsIdtBaseVtString               = 5,
+} EAdinsIdtBaseValueType;
+
+
+// zone types
+typedef enum tagEAdinsIdtBaseZoneType
+{
+    eAdinsIdtBaseZtUndefined            = -1,
+    eAdinsIdtBaseZtBegin                = 0,
+    eAdinsIdtBaseZtOrdinary             = eAdinsIdtBaseZtBegin,
+    eAdinsIdtBaseZtCumulative           = 1,
+    eAdinsIdtBaseZtHidden               = 2,
+    eAdinsIdtBaseZtEnter                = 3,
+    eAdinsIdtBaseZtDrinkingNipple       = 4,
+    eAdinsIdtBaseZtFeeder               = 5,
+    eAdinsIdtBaseZtWall                 = 6,
+    eAdinsIdtBaseZtEnd
+} EAdinsIdtBaseZoneType;
+
+
+// poi types
+typedef enum tagEAdinsIdtBasePoiType
+{
+    eAdinsIdtBasePtUndefined            = -1,
+    eAdinsIdtBasePtBegin                = 0,
+    eAdinsIdtBasePtOrdinary             = eAdinsIdtBasePtBegin,
+    eAdinsIdtBasePtDrinkingNipple       = 1,
+    eAdinsIdtBasePtEnd
+} EAdinsIdtBasePoiType;
+
+
+// MER behavior types
+typedef enum tagEAdinsIdtBaseBehaviorType
+{
+    eAdinsIdtBaseBhtUndefined           = -1,
+    eAdinsIdtBaseBhtBegin               = 0,
+    eAdinsIdtBaseBhtMutEx               = eAdinsIdtBaseBhtBegin,
+    eAdinsIdtBaseBhtStartStop           = 1,
+    eAdinsIdtBaseBhtEvent               = 2,
+    //eAdinsIdtBaseBhtAbrState            = 3,
+    //eAdinsIdtBaseBhtAbrEvent            = 4,
+    eAdinsIdtBaseBhtEnd,
+} EAdinsIdtBaseBehaviorType;
+
+
+// MER event types
+typedef enum tagEAdinsIdtBaseMerEventType
+{
+    eAdinsIdtBaseMetUndefined           = -1,
+    eAdinsIdtBaseMetBegin               = 0,
+    eAdinsIdtBaseMetStart               = eAdinsIdtBaseMetBegin,
+    eAdinsIdtBaseMetStop                = 1,
+    eAdinsIdtBaseMetPointEvent          = 2,
+    eAdinsIdtBaseMetEnd,
+} EAdinsIdtBaseMerEventType;
+
+
+// ATC logic event types
+typedef enum tagEAdinsIdtBaseAtcLogicEvents
+{
+    eAdinsIdtBaseLeBegin                = 0,
+    eAdinsIdtBaseLeUndefined            = eAdinsIdtBaseLeBegin,
+    eAdinsIdtBaseLeRuleBegin            = 10,
+    eAdinsIdtBaseLeRuleEnd              = 11,
+    eAdinsIdtBaseLeConditionBegin       = 20,
+    eAdinsIdtBaseLeConditionEnd         = 21,
+    eAdinsIdtBaseLeConditionTrue        = 22,
+    eAdinsIdtBaseLeConditionFalse       = 23,
+    eAdinsIdtBaseLeActionBegin          = 30,
+    eAdinsIdtBaseLeActionEnd            = 31,
+    eAdinsIdtBaseLeOperatorBegin        = 40,
+    eAdinsIdtBaseLeOperatorEnd          = 41,
+    eAdinsIdtBaseLeOperatorTrue         = 42,
+    eAdinsIdtBaseLeOperatorFalse        = 43,
+    eAdinsIdtBaseLeReferenceBegin       = 50,
+    eAdinsIdtBaseLeReferenceEnd         = 51,
+    eAdinsIdtBaseLeReferenceTrue        = 52,
+    eAdinsIdtBaseLeReferenceFalse       = 53,
+    eAdinsIdtBaseLeVariable             = 60,
+    eAdinsIdtBaseLeEnd,
+} EAdinsIdtBaseAtcLogicEvents;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseFeatures
+//----------------------------------------------------------------------------
+// Description: tracking features as bit flags
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseFeatures
+{
+    unsigned hyper                      m_nFlagsPoints;
+    unsigned hyper                      m_nFlagsScalars;
+    unsigned hyper                      m_nFlagsAngles;
+} NECAdinsIdtBaseFeatures;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseLongArrayConst
+//----------------------------------------------------------------------------
+// Description: long array
+// Note       : SafeArray is alternative but allows any type
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseLongArrayConst
+{
+    long                                m_nSize;
+    [size_is(m_nSize)] const long*      m_p;    //const, can only be used for [in]
+} NECAdinsIdtBaseLongArrayConst;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseLongArray
+//----------------------------------------------------------------------------
+// Description: long array
+// Note       : SafeArray is alternative but allows any type
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseLongArray
+{
+    long                                m_nSize;
+    [size_is(m_nSize)] long*            m_p;
+} NECAdinsIdtBaseLongArray;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseDoubleArrayConst
+//----------------------------------------------------------------------------
+// Description: double array
+// Note       : SafeArray is alternative but allows any type
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseDoubleArrayConst
+{
+    long                                m_nSize;
+    [size_is(m_nSize)] const double*    m_p;    //const, can only be used for [in]
+} NECAdinsIdtBaseDoubleArrayConst;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseValue
+//----------------------------------------------------------------------------
+// Description: variant value
+// Note       : does not support all EAdinsIdtBaseValueType
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseValue
+{
+    EAdinsIdtBaseValueType              m_eType;
+    boolean                             m_bValueBoolean;
+    hyper                               m_lValueLongLong;
+    double                              m_dbValueDouble;
+    hyper                               m_nMicroSeconds;
+} NECAdinsIdtBaseValue;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseValue2
+//----------------------------------------------------------------------------
+// Description: variant value2
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseValue2
+{
+    EAdinsIdtBaseValueType              m_eType;
+    boolean                             m_bValue;
+    hyper                               m_nValue;
+    double                              m_dValue;
+    NCIdtDuration                       m_durValue;
+    NCIdtDateTime                       m_tmValue;
+    [string] wchar_t*                   m_pszValue;         // caller may or may not resonsible of cleanup depending on [in] or [out]
+} NECAdinsIdtBaseValue2;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseSampleFeatureBoolean
+//----------------------------------------------------------------------------
+// Description: Boolean sample feature
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseSampleFeatureBoolean
+{
+    boolean                             m_bValid;
+    boolean                             m_bValue;
+} NECAdinsIdtBaseSampleFeatureBoolean;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseSampleFeatureLong
+//----------------------------------------------------------------------------
+// Description: long sample feature
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseSampleFeatureLong
+{
+    boolean                             m_bValid;
+    long                                m_nValue;
+} NECAdinsIdtBaseSampleFeatureLong;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseSampleFeatureDouble
+//----------------------------------------------------------------------------
+// Description: double sample feature
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseSampleFeatureDouble
+{
+    boolean                             m_bValid;
+    double                              m_dbValue;
+} NECAdinsIdtBaseSampleFeatureDouble;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseSamplePoint
+//----------------------------------------------------------------------------
+// Description: point sample feature
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseSamplePoint
+{
+    boolean                             m_bValid;
+    double                              m_dbX;
+    double                              m_dbY;
+    double                              m_dbZ;
+} NECAdinsIdtBaseSamplePoint;
+
+
+//----------------------------------------------------------------------------
+// struct tagNECAdinsIdtBaseTrackSetId
+//----------------------------------------------------------------------------
+// Description: trackset id
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseTrackSetId
+{
+    long                                m_idTrial;
+    long                                m_idArena;
+} NECAdinsIdtBaseTrackSetId;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseTrackId
+//----------------------------------------------------------------------------
+// Description: track id
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseTrackId
+{
+    long                                m_idTrial;
+    long                                m_idArena;
+    long                                m_idSubject;
+} NECAdinsIdtBaseTrackId;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseMerEventId
+//----------------------------------------------------------------------------
+// Description: MER event id
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseMerEventId
+{
+    long                                m_idArena;
+    long                                m_idSubject;
+    long                                m_idBehavior;
+} NECAdinsIdtBaseMerEventId;
+
+
+//----------------------------------------------------------------------------
+// struct tagNECAdinsIdtBaseSample
+//----------------------------------------------------------------------------
+// Description: sample time information
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseSample
+{
+    NCIdtDuration                       m_offset;   // time offset since start
+    NCIdtDuration                       m_duration; // duration
+} NECAdinsIdtBaseSample;
+
+
+//----------------------------------------------------------------------------
+// struct tagNECAdinsIdtBaseSampleTrackSet
+//----------------------------------------------------------------------------
+// Description: sample per arena
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseSampleTrackSet
+{
+    NECAdinsIdtBaseSample               m_time;
+    NECAdinsIdtBaseSampleFeatureDouble  m_dataPixelChangeRatio;
+} NECAdinsIdtBaseSampleTrackSet;
+
+
+//----------------------------------------------------------------------------
+// struct tagNECAdinsIdtBaseSampleTrackData
+//----------------------------------------------------------------------------
+// Description: sample data features per subject
+// Note       : - renamed from NECAdinsIdtBaseSampleTrack
+//              - using a (fixed) array is relative cheap to copy. Alternative
+//                 of using an interface is more future proof but requires extra
+//                 allocations.
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseSampleTrackData
+{
+    NECAdinsIdtBaseSamplePoint          m_aPoints[g_lAdinsIdtBaseFeatures];
+    NECAdinsIdtBaseSampleFeatureDouble  m_aScalars[g_lAdinsIdtBaseFeatures];
+    NECAdinsIdtBaseSampleFeatureDouble  m_aAngles[g_lAdinsIdtBaseFeatures];
+} NECAdinsIdtBaseSampleTrackData;
+
+
+//----------------------------------------------------------------------------
+// struct tagNECAdinsIdtBaseSampleTrack
+//----------------------------------------------------------------------------
+// Description: sample per subject
+// Note       : no inheritance in C so use as member
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseSampleTrack
+{
+    NECAdinsIdtBaseSample               m_time;
+    NECAdinsIdtBaseSampleTrackData      m_data;
+} NECAdinsIdtBaseSampleTrack;
+
+
+//----------------------------------------------------------------------------
+// struct tagNECAdinsIdtBaseAtcContext
+//----------------------------------------------------------------------------
+// Description: ATC context
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseAtcContext
+{
+    long                                m_idReference;
+    long                                m_nRepeat;
+} NECAdinsIdtBaseAtcContext;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseEventAtc
+//----------------------------------------------------------------------------
+// Description: ATC logic event
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseEventAtc
+{
+    NCIdtDuration                       m_offset;               // time offset since start recording
+    EAdinsIdtBaseAtcLogicEvents         m_eType;
+
+    NECAdinsIdtBaseAtcContext           m_aEntityContext[4];    // context
+
+    long                                m_idRule;               // next 2 fields are NOT the context!!!
+    long                                m_idCondition;
+    long                                m_idAction;
+    long                                m_idOperator;
+    long                                m_idReference;
+    long                                m_idVariable;
+    NECAdinsIdtBaseValue                m_varValue;
+} NECAdinsIdtBaseEventAtc;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseEventHardware
+//----------------------------------------------------------------------------
+// Description: hardware event
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseEventHardware
+{
+    NCIdtDuration                       m_offset;           // time offset since start recording
+    long                                m_idDevice;         // device id
+    long                                m_idCommand;        // command id
+    long                                m_idSignal;         // signal id
+    NECAdinsIdtBaseValue                m_value;            // value
+} NECAdinsIdtBaseEventHardware;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseEventMer
+//----------------------------------------------------------------------------
+// Description: MER event
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseEventMer
+{
+    NCIdtDuration                       m_offset;           // time offset since start recording
+    NECAdinsIdtBaseMerEventId           m_idMerEvent;       // MER event identifier
+    EAdinsIdtBaseMerEventType           m_eMerEventType;    // MER event type
+    long                                m_idReceiver;       // receiver
+} NECAdinsIdtBaseEventMer;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseSubjectInfo
+//----------------------------------------------------------------------------
+// Description: subject info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseSubjectInfo
+{
+    long                                                    m_idSubject;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseSubjectInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseSubjectsInfo
+//----------------------------------------------------------------------------
+// Description: subjects (plural) info
+// Note       : pointer not const, since also used in [out] context
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseSubjectsInfo
+{
+    long                                                    m_nSubjects;
+    [size_is(m_nSubjects)] NECAdinsIdtBaseSubjectInfo*      m_pSubjects;
+} NECAdinsIdtBaseSubjectsInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseArenaInfo
+//----------------------------------------------------------------------------
+// Description: arena info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseArenaInfo
+{
+    long                                                    m_idArena;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseArenaInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseArenasInfo
+//----------------------------------------------------------------------------
+// Description: arenas (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseArenasInfo
+{
+    long                                                    m_nArenas;
+    [size_is(m_nArenas)]  NECAdinsIdtBaseArenaInfo*         m_pArenas;
+} NECAdinsIdtBaseArenasInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseZoneInfo
+//----------------------------------------------------------------------------
+// Description: zone info
+// TODO       : deprecated, use NECAdinsIdtBaseZoneInfo2
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseZoneInfo
+{
+    long                                                    m_idZone;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseZoneInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseZonesInfo
+//----------------------------------------------------------------------------
+// Description: zones (plural) info
+// TODO       : deprecated, use NECAdinsIdtBaseZoneInfo2
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseZonesInfo
+{
+    long                                                    m_nZones;
+    [size_is(m_nZones)] NECAdinsIdtBaseZoneInfo*            m_pZones;
+} NECAdinsIdtBaseZonesInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseZoneInfo2
+//----------------------------------------------------------------------------
+// Description: zone info 2
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseZoneInfo2
+{
+    long                                                    m_idZone;
+    EAdinsIdtBaseZoneType                                   m_eZoneType;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseZoneInfo2;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseZonesInfo2
+//----------------------------------------------------------------------------
+// Description: zones (plural) info 2
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseZonesInfo2
+{
+    long                                                    m_nZones;
+    [size_is(m_nZones)] NECAdinsIdtBaseZoneInfo2*           m_pZones;
+} NECAdinsIdtBaseZonesInfo2;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBasePoiInfo
+//----------------------------------------------------------------------------
+// Description: poi info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBasePoiInfo
+{
+    long                                                    m_idPoi;
+    EAdinsIdtBasePoiType                                    m_ePoiType;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBasePoiInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBasePoisInfo
+//----------------------------------------------------------------------------
+// Description: pois (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBasePoisInfo
+{
+    long                                                    m_nPois;
+    [size_is(m_nPois)] NECAdinsIdtBasePoiInfo*              m_pPois;
+} NECAdinsIdtBasePoisInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseRuleInfo
+//----------------------------------------------------------------------------
+// Description: ATC rule info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseRuleInfo
+{
+    long                                                    m_idRule;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseRuleInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseRulesInfo
+//----------------------------------------------------------------------------
+// Description: ATC rules (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseRulesInfo
+{
+    long                                                    m_nRules;
+    [size_is(m_nRules)]  NECAdinsIdtBaseRuleInfo*           m_pRules;
+} NECAdinsIdtBaseRulesInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseReferenceInfo
+//----------------------------------------------------------------------------
+// Description: ATC reference info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseReferenceInfo
+{
+    long                                                    m_idReference;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseReferenceInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseReferencesInfo
+//----------------------------------------------------------------------------
+// Description: ATC references (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseReferencesInfo
+{
+    long                                                    m_nReferences;
+    [size_is(m_nReferences)]  NECAdinsIdtBaseReferenceInfo* m_pReferences;
+} NECAdinsIdtBaseReferencesInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseConditionInfo
+//----------------------------------------------------------------------------
+// Description: ATC condition info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseConditionInfo
+{
+    long                                                    m_idCondition;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseConditionInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseConditionsInfo
+//----------------------------------------------------------------------------
+// Description: ATC conditions (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseConditionsInfo
+{
+    long                                                    m_nConditions;
+    [size_is(m_nConditions)]  NECAdinsIdtBaseConditionInfo* m_pConditions;
+} NECAdinsIdtBaseConditionsInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseActionInfo
+//----------------------------------------------------------------------------
+// Description: ATC  action info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseActionInfo
+{
+    long                                                    m_idAction;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseActionInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseActionsInfo
+//----------------------------------------------------------------------------
+// Description: ATC actions (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseActionsInfo
+{
+    long                                                    m_nActions;
+    [size_is(m_nActions)]  NECAdinsIdtBaseActionInfo*       m_pActions;
+} NECAdinsIdtBaseActionsInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseOperatorInfo
+//----------------------------------------------------------------------------
+// Description: ATC operator info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseOperatorInfo
+{
+    long                                                    m_idOperator;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseOperatorInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseOperatorsInfo
+//----------------------------------------------------------------------------
+// Description: ATC operators (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseOperatorsInfo
+{
+    long                                                    m_nOperators;
+    [size_is(m_nOperators)]  NECAdinsIdtBaseOperatorInfo*   m_pOperators;
+} NECAdinsIdtBaseOperatorsInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseVariableInfo
+//----------------------------------------------------------------------------
+// Description: ATC variable info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseVariableInfo
+{
+    long                                                    m_idVariable;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseVariableInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseVariablesInfo
+//----------------------------------------------------------------------------
+// Description: ATC variables (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseVariablesInfo
+{
+    long                                                    m_nVariables;
+    [size_is(m_nVariables)]  NECAdinsIdtBaseVariableInfo*   m_pVariables;
+} NECAdinsIdtBaseVariablesInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseDeviceType
+//----------------------------------------------------------------------------
+// Description: hardware device type (e.g. pellet feeder, port tester)
+// Note       : see also 'NECAdinsIdtHiDeviceType'
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseDeviceType
+{
+    long                                                    m_idDeviceType;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseDeviceType;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseDeviceTypes
+//----------------------------------------------------------------------------
+// Description: hardware device types (plural)
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseDeviceTypes
+{
+    long                                                    m_nDeviceTypes;
+    [size_is(m_nDeviceTypes)] NECAdinsIdtBaseDeviceType*    m_pDeviceTypes;
+} NECAdinsIdtBaseDeviceTypes;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseDevice
+//----------------------------------------------------------------------------
+// Description: hardware device (e.g. pellet feeder 1, port tester 2)
+// Note       : see also 'NECAdinsIdtHiDevice'
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseDevice
+{
+    long                                                    m_idDevice;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+    long                                                    m_idDeviceType;
+} NECAdinsIdtBaseDevice;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseDevices
+//----------------------------------------------------------------------------
+// Description: hardware devices (plural)
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseDevices
+{
+    long                                                    m_nDevices;
+    [size_is(m_nDevices)] NECAdinsIdtBaseDevice*            m_pDevices;
+} NECAdinsIdtBaseDevices;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseCommand
+//----------------------------------------------------------------------------
+// Description: hardware command
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseCommand
+{
+    long                                                    m_idCommand;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseCommand;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseCommand
+//----------------------------------------------------------------------------
+// Description: hardware commands (plural)
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseCommands
+{
+    long                                                    m_nCommands;
+    [size_is(m_nCommands)] NECAdinsIdtBaseCommand*          m_pCommands;
+} NECAdinsIdtBaseCommands;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtSignal
+//----------------------------------------------------------------------------
+// Description: hardware signal
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseSignal
+{
+    long                                                    m_idSignal;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+    EAdinsIdtBaseValueType                                  m_eValueType;
+} NECAdinsIdtBaseSignal;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseSignals
+//----------------------------------------------------------------------------
+// Description: hardware signals (plural)
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseSignals
+{
+    long                                                    m_nSignals;
+    [size_is(m_nSignals)] NECAdinsIdtBaseSignal*            m_pSignals;
+} NECAdinsIdtBaseSignals;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseBehaviorGroupInfo
+//----------------------------------------------------------------------------
+// Description: MER behavior group info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseBehaviorGroupInfo
+{
+    long                                                    m_idBehaviorGroup;
+    EAdinsIdtBaseBehaviorType                               m_eBehaviorType;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseBehaviorGroupInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseBehaviorGroupsInfo
+//----------------------------------------------------------------------------
+// Description: MER behavior groups (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseBehaviorGroupsInfo
+{
+    long                                                            m_nBehaviorGroups;
+    [size_is(m_nBehaviorGroups)] NECAdinsIdtBaseBehaviorGroupInfo*  m_pBehaviorGroups;
+} NECAdinsIdtBaseBehaviorGroupsInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseBehaviorInfo
+//----------------------------------------------------------------------------
+// Description: MER behavior info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseBehaviorInfo
+{
+    long                                                    m_idBehavior;
+    long                                                    m_idBehaviorGroup;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseBehaviorInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseBehaviorsInfo
+//----------------------------------------------------------------------------
+// Description: MER behaviors (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseBehaviorsInfo
+{
+    long                                                    m_nBehaviors;
+    [size_is(m_nBehaviors)] NECAdinsIdtBaseBehaviorInfo*    m_pBehaviors;
+} NECAdinsIdtBaseBehaviorsInfo;
+
+
+//----------------------------------------------------------------------------
+// struct tagNECAdinsIdtBaseStvInfo
+//----------------------------------------------------------------------------
+// Description: STV info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseStvInfo
+{
+    long                                                    m_hStv;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseStv;
+
+
+//----------------------------------------------------------------------------
+// struct tagNECAdinsIdtBaseStvsInfo
+//----------------------------------------------------------------------------
+// Description: STV's (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseStvsInfo
+{
+    long                                                    m_nStvs;
+    [size_is(m_nStvs)] NECAdinsIdtBaseStv*                  m_pStvs;
+} NECAdinsIdtBaseStvsInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseArenaSetupInfo
+//----------------------------------------------------------------------------
+// Description: arenasetup info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseArenaSetupInfo
+{
+    long                                                    m_idArenaSetup;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseArenaSetupInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseArenaSetupsInfo
+//----------------------------------------------------------------------------
+// Description: arenasetups (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseArenaSetupsInfo
+{
+    long                                                            m_nArenaSetups;
+    [size_is(m_nArenaSetups)] NECAdinsIdtBaseArenaSetupInfo*        m_pArenaSetups;
+} NECAdinsIdtBaseArenaSetupsInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseTrialControlProfileInfo
+//----------------------------------------------------------------------------
+// Description: trial control profile info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseTrialControlProfileInfo
+{
+    long                                                    m_idTrialControlProfile;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseTrialControlProfileInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseTrialControlProfilesInfo
+//----------------------------------------------------------------------------
+// Description: trial control profiles (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseTrialControlsInfo
+{
+    long                                                                        m_nTrialControlProfiles;
+    [size_is(m_nTrialControlProfiles)] NECAdinsIdtBaseTrialControlProfileInfo*  m_pTrialControlProfiles;
+} NECAdinsIdtBaseTrialControlProfilesInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseDetectionProfileInfo
+//----------------------------------------------------------------------------
+// Description: detection profile info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseDetectionProfileInfo
+{
+    long                                                    m_idDetectionProfile;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseDetectionProfileInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseDetectionProfilesInfo
+//----------------------------------------------------------------------------
+// Description: detection profiles (plural) info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseDetectionProfilesInfo
+{
+    long                                                                    m_nDetectionProfiles;
+    [size_is(m_nDetectionProfiles)] NECAdinsIdtBaseDetectionProfileInfo*    m_pDetectionProfiles;
+} NECAdinsIdtBaseDetectionProfilesInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseTrialInfo
+//----------------------------------------------------------------------------
+// Description: trial info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseTrialInfo
+{
+    long                                                    m_idTrial;
+    wchar_t                                                 m_szName[g_lAdinsIdtBaseNameLength];
+} NECAdinsIdtBaseTrialInfo;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtBaseTrialsInfo
+//----------------------------------------------------------------------------
+// Description: trials info
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseTrialsInfo
+{
+    long                                                    m_nTrials;
+    [size_is(m_nTrials)] NECAdinsIdtBaseTrialInfo*          m_pTrials;
+} NECAdinsIdtBaseTrialsInfo;
+
+
+
+//----------------------------------------------------------------------------
+// struct tagNECAdinsIdtBaseStvValue
+//----------------------------------------------------------------------------
+// Description: STV value
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtBaseStvValue
+{
+    long                                                    m_hStv;
+    NECAdinsIdtBaseTrackId                                  m_idTrack;
+    NECAdinsIdtBaseValue2                                   m_varValue;
+} NECAdinsIdtBaseStvValue;

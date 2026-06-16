@@ -1,0 +1,205 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Common
+// Module     :   Interface
+// File       :   AdinsTiTypesInterface.idl
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "AdinsBaseTypesInterface.idl";
+import "IdtIlTypesInterface.idl";
+import "IlContour.idl";
+import "IlImage.idl";
+
+
+// subject types
+typedef enum tagEAdinsIdtTiSubjectType
+{
+    eAdinsIdtTiStUndefined          = -1,
+    eAdinsIdtTiStBegin              = 0,
+    eAdinsIdtTiStNormal             = eAdinsIdtTiStBegin,
+    eAdinsIdtTiStHooded             = 1,
+    eAdinsIdtTiStEnd
+} EAdinsIdtTiSubjectType;
+
+
+// tracker level
+typedef enum tagEAdinsIdtTiTrackerLevel
+{
+    eAdinsIdtTiTlUndefined          = 0,
+    eAdinsIdtTiTlTrial              = 0x1,
+    eAdinsIdtTiTlArena              = 0x2,
+    eAdinsIdtTiTlBoth               = eAdinsIdtTiTlTrial | eAdinsIdtTiTlArena,
+} EAdinsIdtTiTrackerLevel;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtTiTrackerProperties
+//----------------------------------------------------------------------------
+// Description: tracker properties used by VTS
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtTiTrackerProperties
+{
+    double                          m_dFrameRate;           // nr of frames per second: framerate 25 and sample interval 2 gives 12.5 frames/sec (frames 1-3-5-7- etc)
+    int                             m_nSampleInterval;      // nr of frames between 2 consecutive samples
+    NECAdinsIdtBaseFeatures         m_ftrs;                 // features to track
+} NECAdinsIdtTiTrackerProperties;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtTiTrackerProperties2
+//----------------------------------------------------------------------------
+// Description: tracker properties used by VTS and Ti V3+
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtTiTrackerProperties2
+{
+    double                          m_dFrameRate;           // nr of frames per second: framerate 25 and sample interval 2 gives 12.5 frames/sec (frames 1-3-5-7- etc)
+    int                             m_nSampleInterval;      // nr of frames between 2 consecutive samples
+    NECAdinsIdtBaseFeatures         m_ftrs;                 // features to track
+    [string] const wchar_t*         m_pszDataDir;           // directory to store internals
+    boolean                         m_bSaveInternals;       // Boolean to indicate to store internals
+} NECAdinsIdtTiTrackerProperties2;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtTiArenaProperties
+//----------------------------------------------------------------------------
+// Description: arena properties used on arena level
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtTiArenaProperties
+{
+    long                            m_idArena;              // arena id
+    SIZE                            m_szArena;              // size of arena bounding box (and input image)
+    INCIlImage*                     m_pImageArenaMask;      // arena mask
+} NECAdinsIdtTiArenaProperties;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtTiArenaProperties2
+//----------------------------------------------------------------------------
+// Description: arena properties used on trial level
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtTiArenaProperties2
+{
+    long                            m_idArena;              // arena id
+    RECT                            m_rctArena;             // rectangle of arena bounding box (and position in trial level image)
+} NECAdinsIdtTiArenaProperties2;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtTiArenasProperties
+//----------------------------------------------------------------------------
+// Description: arenas properties
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtTiArenasProperties
+{
+    long                                                        m_nArenas;
+    [size_is(m_nArenas)] const NECAdinsIdtTiArenaProperties2*   m_pArenas; 
+    INCIlImage*                                                 m_pImageArenasMask;     // mask of all arenas
+} NECAdinsIdtTiArenasProperties;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtTiSubjectProperties
+//----------------------------------------------------------------------------
+// Description: subject properties
+// TODO       : or use NECAdinsIdtBaseSubjectInfo (but Dss doesn't know subject names)
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtTiSubjectProperties
+{
+    long                            m_idSubject;            // subject id
+} NECAdinsIdtTiSubjectProperties;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtTiSubjectsProperties
+//----------------------------------------------------------------------------
+// Description: subjects properties
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtTiSubjectsProperties
+{
+    boolean                                                         m_bUseMinSize;      // optional minimum size
+    int                                                             m_nMinSize;         // minimum size
+    boolean                                                         m_bUseMaxSize;      // optional maximum size
+    int                                                             m_nMaxSize;
+    EAdinsIdtTiSubjectType                                          m_eTiSubjectType;   // optional subject type hint
+
+    long                                                            m_nSubjects;
+    [size_is(m_nSubjects)] const NECAdinsIdtTiSubjectProperties*    m_pSubjects; 
+} NECAdinsIdtTiSubjectsProperties;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtTiSampleIn
+//----------------------------------------------------------------------------
+// Description: sample in. 
+// Note       : images are  with full (trial level) or arena (arena level) size
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtTiSampleIn
+{
+    hyper                           m_nFrame;
+    INCIlImage*                     m_pImageRaw8bit;        // raw (original + image enhancements) 8 bit grey scale image
+    INCIlImage*                     m_pImageRaw24bit;       // optional: raw (original + image enehancements) 24 bit color image (if present)
+    INCIlImage*                     m_pImagePreProcessed;   // preprocessed 8 bit image and candidate subject blobs using only black and white
+} NECAdinsIdtTiSampleIn;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtTiSampleIn2
+//----------------------------------------------------------------------------
+// Description: sample in for Ti V3+
+// Note       : images are  with full (trial level) or arena (arena level) size
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtTiSampleIn2
+{
+    hyper                           m_nFrame;               // frame number
+    NCIdtDateTime                   m_tmFrame;              // frame time
+    boolean                         m_bStart;               // recording start trial event
+    boolean                         m_bDiscontinuity;       // discontinuity (i.e. sample - sample_prev != m_nSampleInterval)
+    INCIlImage*                     m_pImageRaw8bit;        // raw (original + image enhancements) 8 bit grey scale image
+    INCIlImage*                     m_pImageRaw24bit;       // optional: raw (original + image enehancements) 24 bit color image (if present)
+    INCIlImage*                     m_pImagePreProcessed;   // preprocessed 8 bit image and candidate subject blobs using only black and white
+} NECAdinsIdtTiSampleIn2;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtTiSampleOut
+//----------------------------------------------------------------------------
+// Description: sample out for subject
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtTiSampleOut
+{
+    long                            m_idSubject;            // subject id
+    hyper                           m_nFrame;               // the frame number
+    NECAdinsIdtBaseSampleTrackData  m_sample;               // sample data
+    INCIlContour*                   m_pContour;             // optional: contour relative to arena. Client responsibility to release
+} NECAdinsIdtTiSampleOut;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtTiSampleOut2
+//----------------------------------------------------------------------------
+// Description: sample out for arena - subject
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtTiSampleOut2
+{
+    long                            m_idArena;              // arena id
+    long                            m_idSubject;            // subject id
+    hyper                           m_nFrame;               // the frame number
+    NECAdinsIdtBaseSampleTrackData  m_sample;               // sample data
+    INCIlContour*                   m_pContour;             // optional: contour relative to arena. Client responsibility to release
+} NECAdinsIdtTiSampleOut2;
+
+
+//----------------------------------------------------------------------------
+// struct NECAdinsIdtTiError
+//----------------------------------------------------------------------------
+// Description: simple error struct
+// Note       : COM uses IErrorInfo
+//----------------------------------------------------------------------------
+typedef struct tagNECAdinsIdtTiError
+{
+    long                            m_nCode;
+    wchar_t                         m_szText[g_lAdinsIdtBaseErrorLength];
+} NECAdinsIdtTiError;

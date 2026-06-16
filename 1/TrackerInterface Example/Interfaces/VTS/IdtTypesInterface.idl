@@ -1,0 +1,129 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Common
+// Module     :   Interface
+// File       :   IdtTypesInterface.idl
+//----------------------------------------------------------------------------
+const unsigned long     g_culIdtNameLength          = 256;  // Used for element names like subject name and modifier name
+const unsigned long     g_culIdtDescriptionLength   = 2048; // Used for descriptions, comments, etc
+const unsigned long     g_culIdtRightAllowAlways    = 0;    // Used for 'GetRight'
+
+
+typedef enum tagEIdtLengthUnits
+{
+    eLuUndefined    = -1, // always first
+    eLuBegin        = 0,
+    eLuMm           = eLuBegin,
+    eLuCm,
+    eLuM,
+    eLuInch,
+    eLuEnd
+} EIdtLengthUnits;
+
+typedef enum tagEIdtTimeUnits
+{
+    eTuUndefined    = -1, // always first
+    eTuBegin        = 0,
+    eTuMs           = eTuBegin,
+    eTuS,
+    eTuMin,
+    eTuHour,
+    eTuEnd
+} EIdtTimeUnits;
+
+typedef enum tagEIdtRotationUnits
+{
+    eRuUndefined    = -1,       // always first
+    eRuBegin        = 0,
+    eRuDeg          = eRuBegin, // 360
+    eRuRad,                     // 2*pi
+    eRuGra,                     // 400
+    eRuRot,                     // 1
+    eRuEnd
+} EIdtRotationUnits;
+
+typedef enum tagEIdtLanguage
+{
+    eLngUndefined   = -1,
+    eLngBegin       = 0,
+    eLngEnUs        = eLngBegin,
+    eLngZhCn        = 1,
+    eLngNlNl        = 2,
+    eLngDeDe        = 3,
+    eLngHuHu        = 4,
+    eLngEnd
+} EIdtLanguage;
+
+typedef enum tagEIdtSI
+{
+    eSIBegin        = 0,
+    eSILength       = 0,
+    eSIMass         = 1,
+    eSITime         = 2,
+    eSICurrent      = 3,
+    eSITemperature  = 4,
+    eSIAmount       = 5,
+    eSILuminance    = 6,
+    eSIAngle        = 7,
+    eSIString       = 8,
+    eSIEnd
+} EIdtSI;
+
+
+//----------------------------------------------------------------------------
+// struct NCIdtNameInfo
+//----------------------------------------------------------------------------
+// Description: general usable name info
+//----------------------------------------------------------------------------
+typedef struct tagNCIdtNameInfo
+{
+    wchar_t             m_szName[g_culIdtNameLength];
+} NCIdtNameInfo;
+
+
+//----------------------------------------------------------------------------
+// struct tagNCIdtDateTime
+//----------------------------------------------------------------------------
+// Description: for specifying a date-time stamp, including time zone and
+//              datelight savings information.
+// Note       : OLE supports DATE format for this (https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/date-type)
+//----------------------------------------------------------------------------
+typedef struct tagNCIdtDateTime
+{
+    unsigned long       m_nYear;                // The year. The valid values for this member are 0 to many.
+    unsigned long       m_nMonth;               // The month. The valid values for this member are 1 (January) through 12 (December).
+    unsigned long       m_nDay;                 // The day of the week. The valid values for this member are 1 through 31.
+    unsigned long       m_nHour;                // The hour. The valid values for this member are 0 through 23.
+    unsigned long       m_nMinute;              // The minute. The valid values for this member are 0 through 59.
+    unsigned long       m_nSecond;              // The second. The valid values for this member are 0 through 59.
+    unsigned long       m_nMilli;               // The millisecond. The valid values for this member are 0 through 999.
+    unsigned long       m_nMicro;               // The microsecond. The valid values for this member are 0 through 999.
+} NCIdtDateTime;
+
+
+//----------------------------------------------------------------------------
+// struct tagNCIdtDuration
+//----------------------------------------------------------------------------
+// Description: duration
+//----------------------------------------------------------------------------
+typedef struct tagNCIdtDuration
+{
+    hyper               m_nMicroSeconds;
+} NCIdtDuration;
+
+
+//----------------------------------------------------------------------------
+// struct NCIdtUnit
+//----------------------------------------------------------------------------
+// Description: dimension unit
+// Note       : MIDL 'small' is undefined by 'cvdef.h' therefore use 'signed char' instead
+//----------------------------------------------------------------------------
+typedef struct tagNCIdtUnit
+{
+    signed char         m_unit[eSIEnd];                 // dimension unit (e.g. m/s^2: m_unit[eSILength] = 1, m_unit[eSITime] = -2)
+    wchar_t             m_szName[g_culIdtNameLength];   // string unit
+} NCIdtUnit;
+
+
+typedef NCIdtNameInfo NCIdtAddinInfo;

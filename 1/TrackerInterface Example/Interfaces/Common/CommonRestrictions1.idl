@@ -1,0 +1,32 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Common
+// Module     :   Interface
+// File       :   CommonRestrictions1.idl
+//----------------------------------------------------------------------------
+// Revisions  :
+// 15-09-2022 Egon Schrasser            - Original version
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "IdtTypesInterface.idl";
+
+
+//----------------------------------------------------------------------------
+// interface INCCommonRestrictions
+//----------------------------------------------------------------------------
+// Description: common restrictions interface for all components. Returns a 
+//              component specific right
+// Note       : uses long as common type; cast to enum in client code if appropriate
+//----------------------------------------------------------------------------
+[
+    object,
+    uuid(CF23488A-E888-4BB4-8E10-6112FA6B9748),
+    helpstring("INCCommonRestrictions"),
+    pointer_default(unique)
+]
+interface INCCommonRestrictions : IUnknown
+{
+    HRESULT GetRight    ([out] long* pRight);
+};

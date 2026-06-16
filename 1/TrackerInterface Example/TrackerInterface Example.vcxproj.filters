@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="Exported">
+      <UniqueIdentifier>{2f0ddb8a-fcf7-4bd0-9fd4-f752740694e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Interfaces">
+      <UniqueIdentifier>{5b65ecd5-f48d-4538-a312-22ce779406b9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Implementation\TiExmGuids.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\TiExmpch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\TiExmtypes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\NCTiExmArenaTracker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\NCTiExmDlgSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\NCTiExmSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\NCTiExmApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\NCTiExmModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\NCTiExmUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\NCTiExmComContour.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\TrackerInterfaceExample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\NCTiExmTrackerInterfaceExample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\NCTiExmImageView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\NCTiExmUnionFind.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(NSharedRoot)Interfaces\VTS\AdinsGuids.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\TiExmfwd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\TiExmpch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\TiExmtypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\NCTiExmApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\NCTiExmSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\NCTiExmDlgSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\NCTiExmArenaTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\NCTiExmModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\NCTiExmUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\NCTiExmComContour.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\NCTiExmSampleOut.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\TiExmresource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\NCTiExmTrackerInterfaceExample.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\NCTiExmImageView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\NCTiExmDebug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\NCTiExmBlob.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\NCTiExmUnionFind.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Implementation\Readme.txt" />
+    <None Include="Implementation\TrackerInterfaceExampleu.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Implementation\TrackerInterfaceExampleud.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Implementation\res\TrackerInterfaceExample.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Implementation\res\TrackerInterfaceExample.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Implementation\res\TrackerInterfaceExample1.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Implementation\TrackerInterfaceExample.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Implementation\TrackerInterfaceExampled.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="Interfaces\VTS\AdinsArenaSetupInterface1.idl">
+      <Filter>Source Files\Interfaces</Filter>
+    </Midl>
+    <Midl Include="Interfaces\VTS\AdinsBaseTypesInterface.idl">
+      <Filter>Source Files\Interfaces</Filter>
+    </Midl>
+    <Midl Include="Interfaces\VTS\AdinsTiTypesInterface.idl">
+      <Filter>Source Files\Interfaces</Filter>
+    </Midl>
+    <Midl Include="Interfaces\Common\CommonInterface1.idl">
+      <Filter>Source Files\Interfaces</Filter>
+    </Midl>
+    <Midl Include="Interfaces\Common\IdtIlTypesInterface.idl">
+      <Filter>Source Files\Interfaces</Filter>
+    </Midl>
+    <Midl Include="Interfaces\Common\IdtTypesInterface.idl">
+      <Filter>Source Files\Interfaces</Filter>
+    </Midl>
+    <Midl Include="Interfaces\Common\IlContour.idl">
+      <Filter>Source Files\Interfaces</Filter>
+    </Midl>
+    <Midl Include="Interfaces\Common\IlImage.idl">
+      <Filter>Source Files\Interfaces</Filter>
+    </Midl>
+    <Midl Include="Interfaces\Common\PersistDirectory.idl">
+      <Filter>Source Files\Interfaces</Filter>
+    </Midl>
+    <Midl Include="Interfaces\VTS\TiExmInterface1.idl">
+      <Filter>Source Files\Interfaces</Filter>
+    </Midl>
+    <Midl Include="Interfaces\VTS\TiInterface3.idl">
+      <Filter>Source Files\Interfaces</Filter>
+    </Midl>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Implementation\TrackerInterfaceExample.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

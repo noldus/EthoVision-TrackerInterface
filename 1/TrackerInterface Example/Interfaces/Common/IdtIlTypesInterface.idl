@@ -1,0 +1,53 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Common
+// Module     :   Interface
+// File       :   IdtIlTypesInterface.idl
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "IdtTypesInterface.idl";
+
+
+typedef enum tagEIdtIlImageType
+{
+    eItUndefined    = -1,
+    eItBegin        = 0,
+    eItRGB8         = eItBegin,
+    eItRGB565       = 1,
+    eItRGB24        = 2,
+    eItRGB32        = 3,
+    eItEnd,
+} EIdtIlImageType;
+
+
+//----------------------------------------------------------------------------
+// struct NCIdtIlImage
+//----------------------------------------------------------------------------
+// Description: image data
+// Note       : deprecated: use INCIlImage when passing as interface
+//----------------------------------------------------------------------------
+typedef struct tagNCIdtIlImage
+{
+    EIdtIlImageType                 m_eImageType;
+    long                            m_nWidth;
+    long                            m_nHeigth;
+    const byte*                     m_pBuffer;
+    long                            m_nBufferSize;
+    long                            m_nStepSize;
+} NCIdtIlImage;
+
+
+//----------------------------------------------------------------------------
+// struct NCIdtIlContour
+//----------------------------------------------------------------------------
+// Description: contour data
+// Note       : deprecated: use INCIlContour when passing as interface
+//----------------------------------------------------------------------------
+typedef struct tagNCIdtIlContour
+{
+    long                            m_nPoints;
+    POINT*                          m_pPoints;
+    RECT                            m_rectRoi;
+} NCIdtIlContour;

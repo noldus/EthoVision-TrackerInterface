@@ -1,0 +1,31 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Common
+// Module     :   Interface
+// File       :   IlContour.idl
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "IdtIlTypesInterface.idl";
+import "IdtTypesInterface.idl";
+
+
+//----------------------------------------------------------------------------
+// struct INCIlContour
+//----------------------------------------------------------------------------
+// Description: contour interface. A contour is a collection of 2D points which
+//              represents the boundary
+//----------------------------------------------------------------------------
+[
+    object,
+    uuid(D5FC0FEB-64E1-4230-A53B-9668D1E45484),
+    helpstring("INCIlContour"),
+    pointer_default(unique)
+]
+interface INCIlContour : IUnknown
+{
+    HRESULT GetPointsCount  ([out] long* pPoints);
+    HRESULT GetPoint        ([in] long nPoint, [out] POINT* pPoint);
+    HRESULT GetRoi          ([out] RECT* pRoi);
+}

@@ -1,0 +1,35 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Interfaces
+// Module     :   Common
+// File       :   CamBaslerPylon.idl
+//----------------------------------------------------------------------------
+// Revisions  :
+// 23-11-2018 Robert Hoogmans           - Original version
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "CommonInterface1.idl";
+import "CamBaslerPylon.idl";
+
+
+[
+    uuid(00639DB1-D808-4496-80F9-C34854B0C614),
+    version(1.0),
+    helpstring("CamBaslerPylon Type Library")
+]
+library CamBaslerPylonLib
+{
+    importlib("stdole2.tlb");
+    [
+        uuid(99964FAD-893D-45CC-AE8B-902D312EF3E0),
+        helpstring("CamBaslerPylon Class")
+    ]
+    coclass CamBaslerPylon
+    {
+        interface INCCommonInterface;
+        interface INCCamBaslerPylon;
+    };
+};
+

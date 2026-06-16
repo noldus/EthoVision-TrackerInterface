@@ -1,0 +1,28 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Common
+// Module     :   Interface
+// File       :   CommonInterface1.idl
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "IdtTypesInterface.idl";
+
+
+//----------------------------------------------------------------------------
+// interface INCCommonInterface
+//----------------------------------------------------------------------------
+// Description: common interface for all components
+//----------------------------------------------------------------------------
+[
+    object,
+    uuid(CF23488A-E888-4BB4-8E10-6112FA6B9747),
+    helpstring("INCCommonInterface"),
+    pointer_default(unique)
+]
+interface INCCommonInterface : IUnknown
+{
+    HRESULT GetInfo     ([out] NCIdtAddinInfo* pInfo);
+    HRESULT SetLanguage ([in] EIdtLanguage eLng);
+};

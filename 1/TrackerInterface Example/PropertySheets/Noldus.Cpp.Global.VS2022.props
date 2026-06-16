@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+ <PropertyGroup>
+   <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+ </PropertyGroup>
+    <ImportGroup Label="PropertySheets" >
+        <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+        <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+        <Import Project="Noldus.Global.props" Condition=" '$(NoldusGlobal)' != 'NoldusGlobalDefined' " />
+    </ImportGroup>
+  <PropertyGroup>
+    <IncludePath>$(CommonProgramFiles)\System\Ado;$(NDevelopRootSdkAndLibraries)boost\1_86_0;$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath);$(NExternal)boost\$(NPlatformFolder);$(NExternal)</LibraryPath>
+    <CodeAnalysisRuleSet>$(NSharedRoot)Config\CodeAnalysisRules\Noldus.Cpp.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  <ClCompile>
+    <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..;$(NCommonRoot);$(NSharedRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    <MinimalRebuild>false</MinimalRebuild>
+    <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+    <LanguageStandard>stdcpp20</LanguageStandard>
+    <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
+    <DisableAnalyzeExternal>true</DisableAnalyzeExternal>
+  </ClCompile>
+  <Midl>
+    <AdditionalIncludeDirectories>$(NCommonInterfacesRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+  </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <Link>
+      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

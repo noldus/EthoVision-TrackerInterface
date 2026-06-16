@@ -1,0 +1,41 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Common
+// Module     :   Interface
+// File       :   TrkTrackfileCreator.idl
+//----------------------------------------------------------------------------
+// Revisions  :
+// 17-11-2020 Egon Schrasser            - Original version
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "idttypesinterface.idl";
+import "adinsbasetypesinterface.idl";
+
+
+//----------------------------------------------------------------------------
+// struct INCTrkTrackfileCreator
+//----------------------------------------------------------------------------
+// Description: trackfile creator
+// TODO       : - depedency on VTS base types
+//              - C++ DLL embed COM or separate 
+//----------------------------------------------------------------------------
+[
+    object,
+    local,
+    uuid(98447CB7-AC66-4E39-B9E8-05D36A391A91),
+    helpstring("INCTrkTrackfileCreator Interface"),
+    pointer_default(unique)
+]
+interface INCTrkTrackfileCreator : IUnknown
+{
+    HRESULT                 Create                  ([in, string] const wchar_t* pszFile);
+
+    HRESULT                 SetFeatures             ([in] NECAdinsIdtBaseFeatures* pFeatures);  //NO VTS base versus common
+    HRESULT                 SetSampleRate           ([in] double dbSamplesPerSecond);
+    HRESULT                 SetStartTime            ([in] const NCIdtDateTime* pStartTime);
+
+    HRESULT                 AddSample               ([in] const NECAdinsIdtBaseSampleTrack* pSample, [out] hyper* pSampleIndex);
+    //Gen::SampleIndex        AddHiddenZoneSample     (const NCTrkTrackfileSampleHiddenZone& crSample);
+}

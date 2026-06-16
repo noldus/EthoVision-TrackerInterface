@@ -1,0 +1,9 @@
+; TrackerInterfaceExampleud.def : Declares the module parameters for the DLL.
+
+LIBRARY      "TrackerInterfaceExampleud"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

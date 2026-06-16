@@ -1,0 +1,10 @@
+{
+  "name": "Connection settings",
+  "version": "1.0",
+  "decription": "Settings needed to make a connection to the stimulus logger Chrome extension.",
+  "webSocketSettings": {
+    "host": "localhost",
+    "port": "639",
+    "path": "chrome-listener"
+  }
+}

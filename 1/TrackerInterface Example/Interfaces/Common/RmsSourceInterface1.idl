@@ -1,0 +1,147 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Interfaces
+// Module     :   Common
+// File       :   RmsSourceInterface1.idl
+//----------------------------------------------------------------------------
+// Revisions  :
+// 10-11-2015 Egon Schrasser            - Original version
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "idttypesinterface.idl";
+
+const unsigned long     g_culRmsSLProxMessageLength = 2048;  // Result message length
+const unsigned long     g_culRmsSLProxLicenseNumberLength = 128;  // length of License number
+const unsigned long     g_culRmsSLProxProductListLength = 128;  // length of vector of valid products
+const unsigned long long g_cullRmsSLProxyChallengeValue = 1975021510; //use this value to challengeResponse
+
+
+typedef enum tagERmsSLProxLicenseState
+{
+    eStUnknownError = 0,
+    eStSuccess = 1,
+    eStmissingLicense = 4,
+    eStConnectionTimeout = 5
+} ERmsSLProxLicenseState;
+
+typedef enum tagERmsSLProxLoginResultState
+{
+    eLogUnknownError = 0,
+    eLogSuccess = 1,
+    eLogInvalidUsername = 2,
+    eLogAlreadyLoggedIn = 3,
+    eLogMissingLicense = 4,
+    eLogConnectionTimeout = 5,
+    eLogNoMoreFreeLicense = 6,
+    eLogLicenseExpired = 7,
+    eLogUserHaveNoRights = 8,
+    eLogAdminBansGuestLogin = 9,
+    eLogProblemWithTimeSync = 10,
+    eLogLoginDataMissing = 11,
+
+}ERmsSLProxLoginResultState;
+
+typedef enum tagECheckLicenseResult
+{
+    eLicNoValidLicense = 0,
+    eLicValidLicense = 1,
+    eLicValidLicenseGuest = 2,
+}ECheckLicenseResult;
+
+//----------------------------------------------------------------------------
+// struct tagNCRmsSLProxRestrictionResult
+//----------------------------------------------------------------------------
+// Description: 
+//----------------------------------------------------------------------------
+typedef struct tagNCRmsSLProxRestrictionResult
+{
+    ERmsSLProxLicenseState      State;
+    long long  RestrictionsBits;
+
+} NCRmsSLProxRestrictionResult;
+
+
+//----------------------------------------------------------------------------
+// struct tagNCRmsSLProxRestrictionResult
+//----------------------------------------------------------------------------
+// Description: 
+//----------------------------------------------------------------------------
+typedef struct tagNCRmsSLProxLogResult
+{
+    ERmsSLProxLoginResultState  ResultId;
+    wchar_t                     ResultMessage[g_culRmsSLProxMessageLength];
+    long                        ProductId;
+    wchar_t                     LicenseNum[g_culRmsSLProxLicenseNumberLength];
+    long                        DaysLeft;
+}NCRmsSLProxLogResult;
+
+
+typedef char    NCRmsSLProxProductIDVec[g_culRmsSLProxProductListLength];
+
+
+//----------------------------------------------------------------------------
+// interface INCRmsSourceInterface
+//----------------------------------------------------------------------------
+// Description: restriction manager source interface
+//----------------------------------------------------------------------------
+[
+    object,
+    uuid(BDC44844-DF69-4BED-B6BE-3428F234A0A4),
+    helpstring("INCRmsSourceInterface"),
+    pointer_default(unique)
+]
+interface INCRmsSourceInterface : IUnknown
+{
+    HRESULT Challenge   ([in, string] const OLECHAR* pszChallenge, [out, string] OLECHAR** ppszResponse);
+
+    HRESULT IsAllowed   ([in] long nProduct, [in] long nRestriction, [in, out] boolean* pbAllowed);
+
+    HRESULT Initialize          ([in, string] const OLECHAR* crstrHost, 
+                                 [in] unsigned short nPort, 
+                                 [in, string] const OLECHAR* crstrChUsername, 
+                                 [in, string] const OLECHAR* crstrChPsw);
+    
+    HRESULT Closedown           ([in, out] long* pnresult);
+   
+    HRESULT CheckConnection     ([in, out] boolean* pbsSucces);
+    
+    HRESULT UserLogin           ([in, string] const OLECHAR* crstrUserName, 
+                                 [in, string] const OLECHAR* crstrUserComputerID, 
+                                 [in, string] const OLECHAR* strPassword, 
+                                 [in, string] const OLECHAR* strCompName, 
+                                 [in] const NCRmsSLProxProductIDVec* crvecProducts,
+                                 [in] long nNumberOfIDs,
+                                 [in] long nMajorAppVersion,
+                                 [in] NCIdtDateTime* strTimeClient,
+                                 [in, out] NCRmsSLProxLogResult** ppStructResult);
+
+    HRESULT UserLogoff          ([in, string] const OLECHAR* crstrUserName, 
+                                 [in, string] const OLECHAR* crstrUserComputerID, 
+                                 [in, string] const OLECHAR* strCompName, 
+                                 [in] long nProductID,
+                                 [in] long nMajorAppVersion,
+                                 [in, out] NCRmsSLProxLogResult** ppStructResult);
+    
+    HRESULT GetUserRestrictions ([in, string] const OLECHAR* crstrUserName, 
+                                 [in, string] const OLECHAR* crstrUserComputerID, 
+                                 [in] long nAppType, 
+                                 [in] long nMajorAppVersion, 
+                                 [in, out] NCRmsSLProxRestrictionResult** ppStructResult);
+
+    HRESULT KeepAlive           ([in, string] const OLECHAR* crstrUserName, 
+                                 [in, string] const OLECHAR* crstrUserComputerID, 
+                                 [in] long nAppType, 
+                                 [in] long nMajorAppVersion, 
+                                 [in, out] long* pnresult);
+    
+    HRESULT ChkProductLicense   ([in] long nAppType, 
+                                 [in] long nMajorAppVersion, 
+                                 [in, out] long* pbsSucces);
+    
+    HRESULT CreateConnection    ([in, out] long* pnresult);
+
+    HRESULT IsChannelOpen       ([in, out] boolean* pbresult);
+
+};

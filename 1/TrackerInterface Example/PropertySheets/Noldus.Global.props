@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros" Condition=" '$(SolutionDir.Length)' != '0' ">
+    <NDevelopDrive>$(SolutionDir.Substring(0, 2))</NDevelopDrive>
+    <NDevelopRoot>$(NDevelopDrive)\Develop\</NDevelopRoot>
+    <NDevelopRootSdkAndLibraries>$(NDevelopDrive)\Develop\SDK and Libraries\</NDevelopRootSdkAndLibraries>
+    <NSharedRoot>$(NDevelopRoot)Shared\Main\Source\</NSharedRoot>
+    <NInstallationRoot>$(NDevelopRoot)Shared\Main\Installation\</NInstallationRoot>
+    <NLibrariesRoot>$(NDevelopRoot)Libraries\</NLibrariesRoot>
+    <NCommonRoot>$(NSharedRoot)Common\</NCommonRoot>
+    <NCommonInterfacesRoot>$(NSharedRoot)Interfaces\Common\</NCommonInterfacesRoot>
+    <NCommonLibrariesRoot>$(NLibrariesRoot)Common\</NCommonLibrariesRoot>
+    <NCommonVersionNumber>1-213</NCommonVersionNumber>
+    <NDCommonVersionExtension>d-$(NCommonVersionNumber)</NDCommonVersionExtension>
+    <NUDCommonVersionExtension>ud-$(NCommonVersionNumber)</NUDCommonVersionExtension>
+    <NRCommonVersionExtension>-$(NCommonVersionNumber)</NRCommonVersionExtension>
+    <NURCommonVersionExtension>u-$(NCommonVersionNumber)</NURCommonVersionExtension>
+    <NRunTestsInPostBuildEvent>False</NRunTestsInPostBuildEvent>
+    <NRegisterComponentsInPostBuildEvent>False</NRegisterComponentsInPostBuildEvent>
+    <NExternal>$(NSharedRoot)Lib\External\</NExternal>
+    <NInternal>$(NSharedRoot)Lib\Internal\</NInternal>
+    <NExternalNet>$(NSharedRoot)Lib\External.NET\</NExternalNet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoldusGlobal>NoldusGlobalDefined</NoldusGlobal>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros64" Condition="'$(Platform)'=='x64'">
+   <NPlatform>x64</NPlatform>
+   <NPlatformFolder>x64\</NPlatformFolder>
+   <NDebugOutputDirectory>$(NDevelopRoot)Bin\x64\Debug\</NDebugOutputDirectory>
+   <NReleaseOutputDirectory>$(NDevelopRoot)Bin\x64\Release\</NReleaseOutputDirectory>
+   <NIntermediateDirectory>$(NDevelopRoot)Intermediate\x64\</NIntermediateDirectory>
+   <ExecutablePath>$(NExternal);$(NInternal);$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros32" Condition="'$(Platform)'=='x86' Or '$(Platform)'=='Win32'">
+   <NPlatform>x86</NPlatform>
+   <NPlatformFolder>x86\</NPlatformFolder>
+   <NDebugOutputDirectory>$(NDevelopRoot)Bin\x86\Debug\</NDebugOutputDirectory>
+   <NReleaseOutputDirectory>$(NDevelopRoot)Bin\x86\Release\</NReleaseOutputDirectory>
+   <NIntermediateDirectory>$(NDevelopRoot)Intermediate\x86\</NIntermediateDirectory>
+   <ExecutablePath>$(NExternal);$(NInternal);$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacrosAnyCPU" Condition="'$(Platform)'=='AnyCPU'">
+   <NPlatform>AnyCPU</NPlatform>
+   <NPlatformFolder></NPlatformFolder>
+   <NDebugOutputDirectory>$(NDevelopRoot)Bin\AnyCPU\Debug\</NDebugOutputDirectory>
+   <NReleaseOutputDirectory>$(NDevelopRoot)Bin\AnyCPU\Release\</NReleaseOutputDirectory>
+   <NIntermediateDirectory>$(NDevelopRoot)Intermediate\AnyCPU\</NIntermediateDirectory>
+   <ExecutablePath>$(NExternal);$(NInternal);$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <ItemGroup>
+    <BuildMacro Include="NDevelopDrive">
+      <Value>$(NDevelopDrive)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NDevelopRoot">
+      <Value>$(NDevelopRoot)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="NSharedRoot">
+      <Value>$(NSharedRoot)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="NLibrariesRoot">
+      <Value>$(NLibrariesRoot)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="NCommonRoot">
+      <Value>$(NCommonRoot)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NCommonInterfacesRoot">
+      <Value>$(NCommonInterfacesRoot)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="NCommonLibrariesRoot">
+      <Value>$(NCommonLibrariesRoot)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="NDebugOutputDirectory">
+      <Value>$(NDebugOutputDirectory)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NReleaseOutputDirectory">
+      <Value>$(NReleaseOutputDirectory)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NIntermediateDirectory">
+      <Value>$(NIntermediateDirectory)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NCommonVersionNumber">
+      <Value>$(NCommonVersionNumber)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NDCommonVersionExtension">
+      <Value>$(NDCommonVersionExtension)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NUDCommonVersionExtension">
+      <Value>$(NUDCommonVersionExtension)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NRCommonVersionExtension">
+      <Value>$(NRCommonVersionExtension)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NURCommonVersionExtension">
+      <Value>$(NURCommonVersionExtension)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NPlatform">
+      <Value>$(NPlatform)</Value>
+     <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="NRunTestsInPostBuildEvent">
+      <Value>$(NRunTestsInPostBuildEvent)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="NRegisterComponentsInPostBuildEvent">
+      <Value>$(NRegisterComponentsInPostBuildEvent)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

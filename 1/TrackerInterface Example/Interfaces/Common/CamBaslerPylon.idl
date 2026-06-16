@@ -1,0 +1,95 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Interfaces
+// Module     :   Common
+// File       :   CamBaslerPylon.idl
+//----------------------------------------------------------------------------
+// Revisions  :
+// 23-11-2018 Robert Hoogmans           - Original version
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "IdtTypesInterface.idl";
+
+
+//----------------------------------------------------------------------------
+// struct tagNCCamBaslerPylonEnumInfo
+//----------------------------------------------------------------------------
+// Description : Describes one enum value.
+//----------------------------------------------------------------------------
+typedef struct tagNCCamBaslerPylonEnumInfo
+{
+    hyper           m_nValue;
+    wchar_t         m_szName[g_culIdtNameLength];
+
+} NCCamBaslerPylonEnumInfo;
+
+
+//----------------------------------------------------------------------------
+// struct tagNCCamBaslerPylonDeviceInfo
+//----------------------------------------------------------------------------
+// Description : struct returning the device information.
+//----------------------------------------------------------------------------
+typedef struct tagNCCamBaslerPylonDeviceInfo
+{
+    wchar_t         m_szId[g_culIdtNameLength];
+    wchar_t         m_szFirmwareVersion[g_culIdtNameLength];
+    wchar_t         m_szVendorName[g_culIdtNameLength];
+
+    wchar_t         m_szSerialNumber[g_culIdtNameLength];
+    wchar_t         m_szUserDefinedName[g_culIdtNameLength];
+    wchar_t         m_szModelName[g_culIdtNameLength];
+    wchar_t         m_szDeviceVersion[g_culIdtNameLength];
+    wchar_t         m_szDeviceFactory[g_culIdtNameLength];
+    wchar_t         m_szXMLSource[g_culIdtNameLength];
+    wchar_t         m_szDeviceClass[g_culIdtNameLength];
+} NCCamBaslerPylonDeviceInfo;
+
+
+//----------------------------------------------------------------------------
+// interface INCCamBaslerPylon
+//----------------------------------------------------------------------------
+// Description: Basler Camera Pylon interface.
+// Note       : [in, out] needed as out parameter used in 'size_is'
+//----------------------------------------------------------------------------
+[
+    object,
+    uuid(44F07C78-E274-4D67-8C27-7BD3A8646B10),
+    helpstring("INCCamBaslerPylon Interface"),
+    pointer_default(unique)
+]
+interface INCCamBaslerPylon : IUnknown
+{
+    // Connect to and disconnect from the Basler pylon device.
+    HRESULT         ConnectDevice               ([in, string] const wchar_t* pszCameraId);
+    HRESULT         DisconnectDevice            ();
+
+    // Manually supply and remove the pylon device.
+    [local] HRESULT SetDevice                   ([in] void* pDevice);
+    HRESULT         RemoveDevice                ();
+
+
+    HRESULT         GetPropertyBool             ([in, string] const wchar_t* pszPropertyName, [out] boolean*  pbOut);
+    HRESULT         GetPropertyEnum             ([in, string] const wchar_t* pszPropertyName, [out] hyper* pnOut);
+    HRESULT         GetPropertyFloat            ([in, string] const wchar_t* pszPropertyName, [out] double*   pdOut);
+    HRESULT         GetPropertyInteger          ([in, string] const wchar_t* pszPropertyName, [out] hyper* pnOut);
+    HRESULT         GetPropertyString           ([in, string] const wchar_t* pszPropertyName, [out, string] wchar_t** ppszOut);
+
+    HRESULT         GetPropertyIntegerMinMax    ([in, string] const wchar_t* pszPropertyName, [out] hyper* pnMin, [out] hyper* pnMax);
+    HRESULT         GetPropertyFloatMinMax      ([in, string] const wchar_t* pszPropertyName, [ out] double*   pdMin, [out] double*   pdMax);
+    HRESULT         GetPropertyEnumValue        ([in, string] const wchar_t* pszPropertyName, [in, string] const wchar_t* pszEnumName, [out] hyper* pnValue);
+    HRESULT         GetPropertyEnumInformation  ([in, string] const wchar_t* pszPropertyName, [in, out] long* pNrEnumValues, [out, size_is(*pNrEnumValues)] NCCamBaslerPylonEnumInfo** ppEnumInfos);
+
+
+    HRESULT         SetPropertyBool             ([in, string] const wchar_t* pszPropertyName, [in] boolean  bValue);
+    HRESULT         SetPropertyEnum             ([in, string] const wchar_t* pszPropertyName, [in] hyper nValue);
+    HRESULT         SetPropertyFloat            ([in, string] const wchar_t* pszPropertyName, [in] double   dValue);
+    HRESULT         SetPropertyInteger          ([in, string] const wchar_t* pszPropertyName, [in] hyper nValue);
+    HRESULT         SetPropertyString           ([in, string] const wchar_t* pszPropertyName, [in, string] const wchar_t* pszValue);
+
+    HRESULT         IssueCommand                ([in, string] const wchar_t* pszPropertyName);
+
+    HRESULT         GetDeviceInformation        ([out] NCCamBaslerPylonDeviceInfo* pDeviceInformation);
+};
+

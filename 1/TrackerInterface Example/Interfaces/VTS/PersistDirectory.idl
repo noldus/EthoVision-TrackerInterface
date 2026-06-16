@@ -1,0 +1,26 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Common
+// Module     :   Interface
+// File       :   PersistDirectory.idl
+//----------------------------------------------------------------------------
+import "objidl.idl";
+
+
+//----------------------------------------------------------------------------
+// interface IPersistDirectory
+//----------------------------------------------------------------------------
+// Description: IPersistXxx for directories
+//----------------------------------------------------------------------------
+[
+    object,
+    uuid(E33EADDF-39A6-495A-BA0E-A751D7015696),
+    pointer_default(unique)
+]
+interface IPersistDirectory : IPersist
+{
+    HRESULT IsDirty ();
+    HRESULT Load    ([in, string] LPCOLESTR pszDirectoryName);
+    HRESULT Save    ([in, string] LPCOLESTR pszDirectoryName);
+};

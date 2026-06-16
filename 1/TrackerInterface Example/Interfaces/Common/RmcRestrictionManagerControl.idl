@@ -1,0 +1,385 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Interfaces
+// Module     :   Common
+// File       :   RmcRestrictionManagerControl.idl
+//----------------------------------------------------------------------------
+// Revisions  :
+// 22-11-2024 Egon Schrasser            - Original version
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "CommonInterface1.idl";
+
+// Remarks:
+//  - This interface is meant to be used by C++ and .NET clients
+//  - All types are automation types, excpet for strings (wchar_t* instead of BSTR)
+//    This makes it easy to use for both c++ and NET clients
+//    But also means it cannto be used by other types of clients (YAGNI)
+
+
+//----------------------------------------------------------------------------
+// Enums
+//----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------
+// Enum ERmcApplicationType
+//----------------------------------------------------------------------------
+typedef enum tagERmcApplicationType
+{
+    eRmcAppTypeUndefined        = 0,
+    eRmcAppTypeVOS              = 1,
+    eRmcAppTypeVTS              = 2,
+    eRmcAppTypeGAS              = 3,
+    eRmcAppTypeFR               = 4,
+    eRmcAppTypeVOSScoreOnly     = 5,
+    eRmcAppTypeUMR              = 6,
+    eRmcAppTypeUVOX             = 7,
+    eRmcAppTypeMRR              = 8,
+    eRmcAppTypeERL              = 9,
+    eRmcAppTypeZAF              = 10,
+    eRmcAppTypeANT              = 11
+} ERmcApplicationType;
+
+
+//----------------------------------------------------------------------------
+// Enum ERmcResultStatus
+//----------------------------------------------------------------------------
+typedef enum tagERmcResultStatus
+{
+    eRmcResultUndefined       = -1,
+    eRmcResultValid           = 0,
+    eRmcResultWarning         = 1,
+    eRmcResultNotPresent      = 2,
+    eRmcResultError           = 3,
+    eRmcResultCanceled        = 4,
+} ERmcResultStatus;
+
+
+//----------------------------------------------------------------------------
+// Enum ERmcError
+//----------------------------------------------------------------------------
+typedef enum tagERmcError
+{
+//    eRmcErrorBegin                        = 0, // internal use only, no need to define in COM interface
+    eRmcErrorNone                         = 0,
+    eRmcErrorLicenseExpired               = 1,
+    eRmcErrorLicenseNotUpgraded,
+    eRmcErrorLicense,
+    eRmcErrorFile,
+    eRmcErrorDebuggerActive,
+
+    eRmcErrorInitializion,
+    eRmcErrorKeyInvalid,
+    eRmcErrorKeyProductInvalid,
+    eRmcErrorKeyMachineInvalid,
+    eRmcErrorComputerKeyAlreadyUsed,
+    eRmcErrorKeyExceededAllowedInstances,
+    eRmcErrorKeyTampered,
+    eRmcErrorKeyVersionInvalid,
+    eRmcErrorKeyTimeDifferenceExceedsThreshold,
+    eRmcErrorOfflinePeriodExceeded,
+    eRmcErrorServerConnection,
+
+    eRmcErrorDongleAutoUpgradeFailed,
+    eRmcErrorDongleUpgradeRequired,
+    eRmcErrorDongleRegistryUpgradeFailed,
+    eRmcErrorLimitedPeriodNotStarted,
+    eRmcErrorDongleHardware,
+    eRmcErrorDongleWriting,
+    eRmcErrorDongleUpgradeVersion,
+    eRmcErrorDongleUpgradeWrongKey,
+    eRmcErrorDongleUpgradeWrongResultLength,
+    eRmcErrorDongleUpgradeWrongApplication,
+    eRmcErrorDongleUpgradeWrongSerial,
+    eRmcErrorDongleUpgradeWrongVersion,
+    eRmcErrorDongleUpgradeWrongLimited,
+    eRmcErrorUpgradeRetriesExpired,
+    eRmcErrorDongleDriver,
+    eRmcErrorDongleInserted,
+    eRmcErrorLicenseReplaced,
+    eRmcErrorLicenseRemoved,
+    eRmcErrorLicenseRevoked,
+
+    eRmcErrorLicenseSourceUndefined,
+//    eRmcErrorEnd                                  // internal use only, no need to define in COM interface
+} ERmcError;
+
+
+//----------------------------------------------------------------------------
+// Enum ERmcWarning
+//----------------------------------------------------------------------------
+typedef enum tagERmcWarning
+{
+    eRmcWarningNone             = 0,
+    eRmcWarningDebuggerActive   = 1,
+    eRmcWarningEvaluation       = 2,
+    eRmcWarningServerConnection,
+    eRmcWarningLicenseLimitedPeriodWithin30Days,
+    eRmcWarningLicenseOfflineExceedsWithin10Days,
+} ERmcWarning;
+
+
+//----------------------------------------------------------------------------
+// Enum ERmcRestrictionSourceType
+//----------------------------------------------------------------------------
+typedef enum tagERmcRestrictionSourceType
+{
+    eSourceTypeUndefined        = 0x00000000,
+    eSourceTypeDongle           = 0x00000001,
+//  eSourceTypeSiteLicense      = 0x00000010,   // Obsolete source type, kept for reference
+    eSourceTypeQLMNodeLocked    = 0x00000100,   // Fixed --> Fixed Online or Fixed Offline
+    eSourceTypeQLMFloating      = 0x00001000,   // Online --> Floating online  or Fixed Online
+    eSourceTypeAnalysis         = 0x10000000,   // Special unlicensed mode to perform analysis on data acquired with a licensed system.
+} ERmcRestrictionSourceType;
+
+
+//----------------------------------------------------------------------------
+// Enum ERmcLicenseState
+//----------------------------------------------------------------------------
+typedef enum tagERmcLicenseState
+{
+    eRmcLicenseStatusUndefined = 0,
+    eRmcLicenseStatusOk = 1,
+    eRmcLicenseStatusNotPresent = 2,
+    eRmcLicenseStatusInserted = 3,
+    eRmcLicenseStatusRemoved = 4,
+    eRmcLicenseStatusReplaced = 5,
+    //        eLicenseStatusSLMissingLicense          = 6,            // SLS is deprecated.
+    //        eLicenseStatusSLConnectionTimeOut       = 7,            // SLS is deprecated.
+    //        eLicenseStatusSLUnknown                 = 8,            // SLS is deprecated.
+    eRmcLicenseStatusQLMMissingLicense = 9,
+
+} ERmcLicenseState;
+
+
+//----------------------------------------------------------------------------
+// Enum ERmcTimerType
+//----------------------------------------------------------------------------
+typedef enum tagERmcTimerType
+{
+    eTimerTypeUndefined = -1,
+    eTimerTypeWindows = 0,
+    eTimerTypeMultiMedia = 1,
+    eTimerTypeTimerQueue = 2,
+} ERmcTimerType;
+
+
+//----------------------------------------------------------------------------
+// Enum ERmcInformationType
+//----------------------------------------------------------------------------
+typedef enum tagERmcInformationType
+{
+    eRmcInfoTypeUndefined = -1,
+    eRmcInfoTypeEula = 0,
+    eRmcInfoTypeAcknowledgements = 1
+} ERmcInformationType;
+
+
+//----------------------------------------------------------------------------
+// Structs
+//----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------
+// struct NCRmcAppData
+//----------------------------------------------------------------------------
+// Description : application data
+//----------------------------------------------------------------------------
+typedef struct tagNCRmcAppData
+{
+    ERmcApplicationType         m_eType;
+    [string] const wchar_t*     m_pszRegDir;
+    [string] const wchar_t*     m_pszDirAppData;
+    LONG                        m_nMajorVersion;
+    LONG                        m_nMinorVersion;
+    [string] const wchar_t*     m_pszApplicationName;
+} NCRmcAppData;
+
+
+//----------------------------------------------------------------------------
+// struct NCRmcProfilePaths
+//----------------------------------------------------------------------------
+// Description : various paths
+//----------------------------------------------------------------------------
+typedef struct tagNCRmcProfilePaths
+{
+    [string] const wchar_t*     m_pszRestrictionProfiles; 
+    [string] const wchar_t*     m_pszUserProfiles;
+    [string] const wchar_t*     m_pszUserRoles;
+} NCRmcProfilePaths;
+
+
+//----------------------------------------------------------------------------
+// struct NCRmcInformation
+//----------------------------------------------------------------------------
+// Description : Generic information about the active restriction
+// Note        : - this is a copy of NCRmsInformation!
+//               - used as out parameter
+//----------------------------------------------------------------------------
+typedef struct tagNCRmcInformation
+{
+    VARIANT_BOOL                m_bValid;
+    VARIANT_BOOL                m_bRestricted;
+    ERmcRestrictionSourceType   m_eType;
+    ERmcApplicationType         m_eApplicationType;
+    [string] wchar_t*           m_pszLicensedUsername;
+    [string] wchar_t*           m_pszLicenseNumber;
+    hyper                       m_nDaysValid;
+    [string] wchar_t*           m_pszExpirationDate;
+    [string] wchar_t*           m_pszLimitedPeriodStartDate;
+    hyper                       m_nDaysOfflineValid;
+    hyper                       m_nDaysOfflineMax;
+} NCRmcInformation;
+
+
+//----------------------------------------------------------------------------
+// struct NCRmcResult
+//----------------------------------------------------------------------------
+// Description : The resulting status.
+// NOTE        : This is a copy of NCRmsResult !
+//----------------------------------------------------------------------------
+typedef struct tagNCRmcResult
+{
+    ERmcResultStatus    m_eResult;
+    ERmcError           m_eError;
+    ERmcWarning         m_eWarning;
+
+    NCRmcInformation    m_Information;
+} NCRmcResult;
+
+
+//----------------------------------------------------------------------------
+// struct NCRmcConfigurationDataQLM
+//----------------------------------------------------------------------------
+// Description : The QLM configuration Data.
+// NOTE        : This is partial a copy of NCRmsConfigurationDataQLM !
+//----------------------------------------------------------------------------
+typedef struct tagNCRmcConfigurationDataQLM
+{
+    hyper                       m_idProduct;                            // The Product ID number within QLM (define Products/ product information)
+    [string] const wchar_t*     m_pszNameProduct;
+    [string] const wchar_t*     m_pszEncryptionKey;                     // Backward compatible value - empty string for now.
+    [string] const wchar_t*     m_pszPersistenceKey;                    // The GUID from within QLM (define Products/ product information)
+    [string] const wchar_t*     m_pszPublicKey;                         // The public Key from within QLM (define Products/ Encryption keys)
+    [string] const wchar_t*     m_pszCommunicationEncryptionKey;        // The communication Encryption key from QLM (Manage keys/ sites/ encryption keys)
+    [string] const wchar_t*     m_pszRsaPublicKey;                      // The public key from within QLM (define Products/ Encryption Key)
+    VARIANT_BOOL                m_bOfflineUnlimited;                    // Allow unlimited offline licenses with no max number of days offline
+
+} NCRmcConfigurationDataQLM;
+
+
+//----------------------------------------------------------------------------
+// struct NCRmcConfigurationData
+//----------------------------------------------------------------------------
+// Description : The restriction manager configuration Data.
+// NOTE        : This is a copy of NCRmsConfigurationData !
+//----------------------------------------------------------------------------
+typedef struct tagNCRmcConfigurationData
+{
+    NCRmcConfigurationDataQLM       m_dataQlm;
+    hyper                           m_nSourceFlags;
+    VARIANT_BOOL                    m_bUseMyNoldus;
+} NCRmcConfigurationData;
+
+
+//----------------------------------------------------------------------------
+// interface INCRmcLicenseCheckCallback
+//----------------------------------------------------------------------------
+// Description: license checker callback interface
+//----------------------------------------------------------------------------
+[
+    object,
+    nonextensible,
+    uuid(EEF33E7F-4797-44E6-973B-6AA3F51A6D5B),
+    helpstring("INCRmcLicenseCheckCallback"),
+    pointer_default(unique)
+]
+interface INCRmcLicenseCheckCallback : IUnknown
+{
+    HRESULT OnLicenseStatusChanged([in] ERmcLicenseState eStatus);
+};
+
+
+//----------------------------------------------------------------------------
+// interface INCRmcLicenseInformationCallback
+//----------------------------------------------------------------------------
+// Description: callback interface to get specific application information (EULA, Acknowledgements)
+//----------------------------------------------------------------------------
+[
+    object,
+    nonextensible,
+    uuid(492BE080-6B19-428F-8607-93FC76DD941D),
+    helpstring("INCRmcLicenseInformationCallback"),
+    pointer_default(unique)
+]
+interface INCRmcLicenseInformationCallback : IUnknown
+{
+    HRESULT OnShowInfo([in] ERmcInformationType eInfoType);
+};
+
+
+//----------------------------------------------------------------------------
+// interface INCRmcRestrictionManagerControlInterface
+//----------------------------------------------------------------------------
+// Description: restriction manager control interface
+//----------------------------------------------------------------------------
+[
+    object,
+    nonextensible,
+    uuid(567C9853-F314-4869-B178-0FCD789299B4),
+    helpstring("INCRmcRestrictionManagerControlInterface"),
+    pointer_default(unique)
+]
+interface INCRmcRestrictionManagerControlInterface : IUnknown
+{
+    // Initialization
+    HRESULT Challenge                   ([in] const wchar_t* pszChallenge, [out, retval] wchar_t* pszResponse);
+    HRESULT InitializeRestrictionSource ([in] const NCRmcAppData* pAppData, [in] const NCRmcProfilePaths* pProfilePaths, [in] const NCRmcConfigurationData* pConfigData, [out, retval] NCRmcResult* pResult);
+    HRESULT ReleaseRestrictionSource    ();
+
+    HRESULT CheckLicense                ([out, retval] NCRmcResult* pResult);
+    HRESULT HandleLicenseUpgrade        ([in] const VARIANT_BOOL bManditoryUpgrade, [in] LONG iNrOfTries, [out, retval] NCRmcResult* pResult);
+    HRESULT ReactivateQLMOffline        ([in] const NCRmcConfigurationData* pConfigData);
+    HRESULT DeactivateLicense           ();
+
+    // License Validity
+    HRESULT GetLicenseStatus            ([in] const VARIANT_BOOL bForceCheck, [out, retval] NCRmcResult* pResult);
+    HRESULT IsLicenseValid              ([out, retval] VARIANT_BOOL* pbValid);
+    HRESULT GetLicenseSourceType        ([out, retval] ERmcRestrictionSourceType* pType);
+    HRESULT GetLicenseInformation       ([out, retval] NCRmcInformation* pInformation);
+    HRESULT GetIsAllowed                ([in] LONG idSetting, [out, retval]VARIANT_BOOL* pbAllowed);
+    HRESULT GetNumberInt                ([in] LONG iSettingId, [out, retval]LONG* piValue);
+    HRESULT StartLicenseChecking        ([in] LONG iSeconds, [in] INCRmcLicenseCheckCallback* pCallbackLicense, [in] ERmcTimerType eTimerType);
+    HRESULT StopLicenseChecking         ();
+
+    // dialogs
+    HRESULT ShowUserInformationDlg      ([in] INCRmcLicenseInformationCallback* pCallbackEula, [in] INCRmcLicenseInformationCallback* pCallbackAcknowledgments);
+};
+
+
+//----------------------------------------------------------------------------
+// coclass RestrictionManagerControl
+//----------------------------------------------------------------------------
+// Description: restriction manager control component
+//----------------------------------------------------------------------------
+[
+    uuid(5D396E4C-E4A9-40EA-9603-07D362511FF1),
+    version(1.0),
+    helpstring("RestrictionManagerControl 1.0 Type Library")
+]
+library RestrictionManagerControlLib1
+{
+    importlib("stdole2.tlb");
+    [
+        uuid(5D396E4C-E4A9-40EA-9603-07D362511FF0),
+        helpstring("RestrictionManagerControl1 Class")
+    ]
+    coclass RestrictionManagerControl
+    {
+        interface               INCCommonInterface;
+        [default] interface     INCRmcRestrictionManagerControlInterface;
+    };
+};

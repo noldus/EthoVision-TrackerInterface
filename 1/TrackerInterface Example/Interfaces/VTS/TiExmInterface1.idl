@@ -1,0 +1,31 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   TrackerInterface
+// Module     :   TrackerInterface Example
+// File       :   TiExmInterface1.idl
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "CommonInterface1.idl";
+import "TiInterface3.idl";
+
+
+[
+	uuid(54A8C5BE-F62C-4D15-AFC9-742A475AFDE1),
+	version(1.0),
+	helpstring("TrackerInterface Example 1.0 Type Library")
+]
+library TrackerInterfaceExampleLib1
+{
+	importlib("stdole2.tlb");
+	[
+        uuid(54A8C5BE-F62C-4D15-AFC9-742A475AFDE0),
+    	helpstring("TrackerInterfaceExample1 Class")
+	]
+	coclass TrackerInterfaceExample1
+	{
+        interface           INCCommonInterface;
+		[default] interface INECAdinsTiTrackerInterface3;
+	};
+};

@@ -1,0 +1,68 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Common
+// Module     :   Interface
+// File       :   AdinsArenaSetupInterface1.idl
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "AdinsBaseTypesInterface.idl";
+
+
+//----------------------------------------------------------------------------
+// interface INECAdinsArenaSetupInterface
+//----------------------------------------------------------------------------
+// Description: interface of an arenasetup snapshot (i.e. an execution object)
+//----------------------------------------------------------------------------
+[
+    object,
+    uuid(B3F009D2-715F-4134-AC4C-60C67C569222),
+    helpstring("INECAdinsArenaSetup Interface"),
+    pointer_default(unique)
+]
+interface INECAdinsArenaSetupInterface : IUnknown
+{
+    // configuration
+    HRESULT GetArenasInfo                     ([out] NECAdinsIdtBaseArenasInfo* pArenasInfo);
+    HRESULT GetZonesInfo                      ([out] NECAdinsIdtBaseZonesInfo2* pZonesInfo);
+    HRESULT GetPoisInfo                       ([out] NECAdinsIdtBasePoisInfo* pPoisInfo);
+                                              
+    HRESULT IsZoneIdDefined                   ([in] long idArena, [in] long idZone, [out] boolean* pDefined);
+    HRESULT IsPoiIdDefined                    ([in] long idArena, [in] long idPoi, [out] boolean* pDefined);
+    
+    // calibration
+    HRESULT PixelPointToInternalPoint         ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pPixelPoint, [out] NECAdinsIdtBaseSamplePoint* pInternalPoint);
+    HRESULT InternalPointToPixelPoint         ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pInternalPoint, [out] NECAdinsIdtBaseSamplePoint* pPixelPoint);
+                                              
+    HRESULT PixelAngleToInternalAngle         ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pPixelPoint, [in] const NECAdinsIdtBaseSampleFeatureDouble* pPixelAngle, [out] NECAdinsIdtBaseSampleFeatureDouble* pInternalAngle);
+    HRESULT InternalAngleToPixelAngle         ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pInternalPoint, [in] const NECAdinsIdtBaseSampleFeatureDouble* pInternalAngle, [out] NECAdinsIdtBaseSampleFeatureDouble* pPixelAngle);
+
+    HRESULT PixelToInternal                   ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pPixelPoint, [in] const NECAdinsIdtBaseSampleFeatureDouble* pPixelAngle, [out] NECAdinsIdtBaseSamplePoint* pInternalUnitPoint, [out] NECAdinsIdtBaseSampleFeatureDouble* pInternalAngle);
+    HRESULT InternalToPixel                   ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pInternalPoint, [in] const NECAdinsIdtBaseSampleFeatureDouble* pInternalAngle, [out] NECAdinsIdtBaseSamplePoint* pPixelPoint, [out] NECAdinsIdtBaseSampleFeatureDouble* pPixelAngle);
+
+    HRESULT PixelDistanceToInternalDistance   ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pPixelPointCOG, [in] const NECAdinsIdtBaseSampleFeatureDouble* pPixelDistance, [out] NECAdinsIdtBaseSampleFeatureDouble* pInternalUnitDistance);
+    HRESULT InternalDistanceToPixelDistance   ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pInternalPointCOG, [in] const NECAdinsIdtBaseSampleFeatureDouble* pInternalDistance, [out] NECAdinsIdtBaseSampleFeatureDouble* pPixelDistance);
+
+    HRESULT PixelAreaToInternalArea           ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pPixelPointCOG, [in] const NECAdinsIdtBaseSampleFeatureDouble* pPixelArea, [out] NECAdinsIdtBaseSampleFeatureDouble* pInternalArea);
+    HRESULT InternalAreaToPixelArea           ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pInternalPointCOG, [in] const NECAdinsIdtBaseSampleFeatureDouble* pInternalArea, [out] NECAdinsIdtBaseSampleFeatureDouble* pPixelArea);
+
+    // point in region; distance to region (border)
+    
+    HRESULT IsInternalPointInArena            ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pInternalPoint, [out] boolean* pIsInArena);
+    HRESULT IsInternalPointInZone             ([in] long idArena, [in] long idZone, [in] const NECAdinsIdtBaseSamplePoint* pInternalPoint, [out] boolean* pIsInZone);
+    HRESULT InternalRayIntersectsZone         ([in] long idArena, [in] long idZone, [in] const NECAdinsIdtBaseSamplePoint* pRayOrigin, [in] const NECAdinsIdtBaseSampleFeatureDouble* pRayDirection, [out] boolean* pIntersectsZone);
+    
+    HRESULT GetZonesOfInternalPoint           ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pInternalPoint, [in] boolean bIncludeHiddenZones, [out] NECAdinsIdtBaseLongArray* pArrayZoneId);
+    
+    HRESULT GetInternalDistanceToArenaBorder  ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pInternalPoint, [out] NECAdinsIdtBaseSampleFeatureDouble* pInternalDist);
+    HRESULT GetInternalDistanceToZoneBorder   ([in] long idArena, [in] long idZone, [in] const NECAdinsIdtBaseSamplePoint* pInternalPoint, [out] NECAdinsIdtBaseSampleFeatureDouble* pInternalDist);
+    HRESULT GetInternalDistanceToZone         ([in] long idArena, [in] long idZone, [in] const NECAdinsIdtBaseSamplePoint* pInternalPoint, [out] NECAdinsIdtBaseSampleFeatureDouble* pInternalDist);
+    HRESULT GetInternalDistanceToPoi          ([in] long idArena, [in] long idPoi, [in] const NECAdinsIdtBaseSamplePoint* pInternalPoint, [out] NECAdinsIdtBaseSampleFeatureDouble* pInternalDist);
+    HRESULT GetInternalDistanceToPoiOfArena   ([in] long idArena, [in] const NECAdinsIdtBaseSamplePoint* pInternalPoint, [out] NECAdinsIdtBaseSampleFeatureDouble* pInternalDist);
+    HRESULT GetInternalDistanceToPoiOfZone    ([in] long idArena, [in] long idZone, [in] const NECAdinsIdtBaseSamplePoint* pInternalPoint, [out] NECAdinsIdtBaseSampleFeatureDouble* pInternalDist);
+
+    HRESULT GetInternalPointPoi               ([in] long idArena, [in] long idPoi, [out] NECAdinsIdtBaseSamplePoint* pInternalPoint);
+    HRESULT GetInternalPointPoiOfArena        ([in] long idArena, [out] NECAdinsIdtBaseSamplePoint* pInternalPoint);
+    HRESULT GetInternalPointPoiOfZone         ([in] long idArena, [in] long idZone, [out] NECAdinsIdtBaseSamplePoint* pInternalPoint);
+};

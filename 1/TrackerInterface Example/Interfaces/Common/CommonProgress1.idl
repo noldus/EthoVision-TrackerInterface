@@ -1,0 +1,31 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Common
+// Module     :   Interface
+// File       :   CommonProgress1.idl
+//----------------------------------------------------------------------------
+// Revisions  :
+// 22-09-2023 Egon Schrasser            - Original version
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "IdtTypesInterface.idl";
+
+
+//----------------------------------------------------------------------------
+// interface INCCommonProgress
+//----------------------------------------------------------------------------
+// Description : progress report
+//----------------------------------------------------------------------------
+[
+    object,
+    uuid(CF23488A-E888-4BB4-8E10-6112FA6B9750),
+    helpstring("INCCommonProgress"),
+    pointer_default(unique)
+]
+interface INCCommonProgress : IUnknown
+{
+    HRESULT    IsCanceled           ();
+    HRESULT    SetPercentCompleted  ([in] int iCompleted);
+};

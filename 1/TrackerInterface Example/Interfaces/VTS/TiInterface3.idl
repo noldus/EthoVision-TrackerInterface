@@ -1,0 +1,98 @@
+//----------------------------------------------------------------------------
+// N O L D U S   I N F O R M A T I O N   T E C H N O L O G Y   B . V .
+//----------------------------------------------------------------------------
+// Project    :   Common
+// Module     :   Interface
+// File       :   TiInterface3.idl
+//----------------------------------------------------------------------------
+import "oaidl.idl";
+import "ocidl.idl";
+import "AdinsArenaSetupInterface1.idl";
+import "AdinsBaseTypesInterface.idl";
+import "AdinsTiTypesInterface.idl";
+import "PersistDirectory.idl";
+
+
+//----------------------------------------------------------------------------
+// interface INECAdinsTiArenaTracker2
+//----------------------------------------------------------------------------
+// Description: interface for a tracker on arena level. 
+// Input      : sample coordinates are relative to arena boundary
+// Output     : - sample features on arena coodinates
+//              - contour with points relative to arena and arena roi is (0, 0, sz.x, sz.y)
+//----------------------------------------------------------------------------
+[
+    object,
+    local,
+    uuid(FD10E600-A0D6-45DD-B0A8-E62012C122F1),
+    helpstring("INECAdinsTiArenaTracker2"),
+    pointer_default(unique)
+]
+interface INECAdinsTiArenaTracker2 : IUnknown
+{
+    HRESULT SetTrackerProperties    ([in] const NECAdinsIdtTiTrackerProperties2* pTrackerProperties);
+    HRESULT SetArenaProperties      ([in] const NECAdinsIdtTiArenaProperties* pArenaProperties);    
+    HRESULT SetSubjectsProperties   ([in] const NECAdinsIdtTiSubjectsProperties* pSubjectsProperties);
+    
+    HRESULT IsTrackerValid          ([out] boolean* pValid, [out] NECAdinsIdtTiError* pError);
+    
+    HRESULT Reset                   ();
+    HRESULT ProcessSample           ([in] const NECAdinsIdtTiSampleIn2* pSampleIn, [in, out] long* pnSamples, [out, size_is(*pnSamples)] NECAdinsIdtTiSampleOut** ppSample);
+};
+
+
+//----------------------------------------------------------------------------
+// interface INECAdinsTiTrialTracker2
+//----------------------------------------------------------------------------
+// Description: interface for a tracker on trial level.
+// Input      : sample coordinates are relative to video image
+// Output     : - sample features on total image coodinates
+//              - contour with points relative to arena with arena roi set
+//----------------------------------------------------------------------------
+[
+    object,
+    local,
+    uuid(FD10E600-A0D6-45DD-B0A8-E62012C122F2),
+    helpstring("INECAdinsTiTrialTracker2"),
+    pointer_default(unique)
+]
+interface INECAdinsTiTrialTracker2 : IUnknown
+{
+    HRESULT SetTrackerProperties    ([in] const NECAdinsIdtTiTrackerProperties2* pTrackerProperties);
+    HRESULT SetArenasProperties     ([in] const NECAdinsIdtTiArenasProperties* pArenasProperties);
+    HRESULT SetSubjectsProperties   ([in] const NECAdinsIdtTiSubjectsProperties* pSubjectsProperties);
+    
+    HRESULT IsTrackerValid          ([out] boolean* pValid, [out] NECAdinsIdtTiError* pError);
+    
+    HRESULT Reset                   ();    
+    HRESULT ProcessSample           ([in] const NECAdinsIdtTiSampleIn2* pSampleIn, [in, out] long* pnSamples, [out, size_is(*pnSamples)] NECAdinsIdtTiSampleOut2** ppSample);
+};
+
+
+//----------------------------------------------------------------------------
+// interface INECAdinsTiTrackerInterface3
+//----------------------------------------------------------------------------
+// Description: main component tracker interface. Spawns actual trackers on 
+//              arena or trial level depending on preference
+//----------------------------------------------------------------------------
+[
+    object,
+    local,
+    uuid(FD10E600-A0D6-45DD-B0A8-E62012C122F0),
+    helpstring("INECAdinsTiTrackerInterface3 Interface"),
+    pointer_default(unique)
+]
+interface INECAdinsTiTrackerInterface3 : IPersistDirectory
+{
+    HRESULT HasDialog               ([out] boolean* pDialog);
+    HRESULT ShowDialog              ([in] boolean bReadonly);
+    
+    HRESULT GetFeatureCaps          ([out] NECAdinsIdtBaseFeatures* pFeatures);
+    HRESULT GetTrackerLevel         ([out] EAdinsIdtTiTrackerLevel* pTrackerLevel);
+    
+    HRESULT IsTrackerInterfaceValid ([out] boolean* pValid, [out] NECAdinsIdtTiError* pError);
+    HRESULT IsUseParallel           ([out] boolean* pParallel);
+    
+    HRESULT CreateTrialTracker      ([in] const NECAdinsIdtTiTrackerProperties2* pTrackerProperties, [in] const NECAdinsIdtTiArenasProperties* pArenasProperties, [in] const NECAdinsIdtTiSubjectsProperties* pSubjectsProperties, [in] INECAdinsArenaSetupInterface* pArenaSetupInterface, [out] INECAdinsTiTrialTracker2** ppTracker);
+    HRESULT CreateArenaTracker      ([in] long idArena, [in] const NECAdinsIdtTiTrackerProperties2* pTrackerProperties, [in] const NECAdinsIdtTiArenaProperties* pArenaProperties, [in] const NECAdinsIdtTiSubjectsProperties* pSubjectsProperties, [in] INECAdinsArenaSetupInterface* pArenaSetupInterface, [out] INECAdinsTiArenaTracker2** ppTracker);
+};
