@@ -4,9 +4,9 @@ plugin has the following setup:
 - an arena tracker plugin implementing interface INECAdinsTiArenaTracker2. Arena trackers are created per trial / arena combination.
 The sample project uses ATL to fill in the required COM boilerplate code.
 
-The tracker on arena level gets three arena images (i.e. one raw 8 bit; one raw 24 bits and one preprocessed 8 bit image) in which nobject detection 
-should take place. The sample project uses an algorithm from Claude AI which trates neighbouring pixels as one blob. The largest blobs get returned 
-as identified subjects.
+The tracker on arena level gets three arena images (i.e. one raw 8-bit; one raw 24-bit and one preprocessed 8-bit image) in which object detection 
+should take place. The sample project uses a simple blob detection algorithm from Claude which treats neighboring pixels as one blob. The largest blobs are returned to EthoVision as identified subjects per sample.
 
 Download the project and build it with Visual Studio 2022. For debugging use EthoVision.exe as startup exe. The component should be loaded on open experiment;
-arena trackers are created in detection settings and acquisition. Change the GUID's in readme.txt when the component is used outside to prevent clashes.
+arena trackers are created in detection settings and acquisition. GUID's should be globally unique so change the GUID's listed in readme.txt when the component
+is used outside in the world to prevent clashes with other components.
