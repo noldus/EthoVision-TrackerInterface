@@ -1,2 +1,13 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# MIDL files shouldn't drive the language stats
+*.idl linguist-detectable=false
+
+# This project uses .h for C++ headers, not C
+*.h linguist-language=C++
+
+# Other COM/ATL support files that aren't really "code"
+*.rgs linguist-detectable=false
+*.rc  linguist-detectable=false
+*.def linguist-detectable=false
