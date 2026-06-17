@@ -296,7 +296,8 @@ HRESULT NCTiExmTrackerInterfaceExample::IsUseParallel(boolean* pParallel)
 //----------------------------------------------------------------------------
 // Function NCTiExmTrackerInterfaceExample::CreateTrialTracker
 //----------------------------------------------------------------------------
-// Description  : create trial tracker
+// Description  : create tracker on trial level with images coming in on trial
+//                level. Not supported in this example.
 //----------------------------------------------------------------------------
 HRESULT NCTiExmTrackerInterfaceExample::CreateTrialTracker(const NECAdinsIdtTiTrackerProperties2* pTrackerProperties, const NECAdinsIdtTiArenasProperties* pArenasProperties, const NECAdinsIdtTiSubjectsProperties* pSubjectsProperties, INECAdinsArenaSetupInterface* pArenaSetupInterface, INECAdinsTiTrialTracker2** ppTracker)
 {
@@ -317,7 +318,7 @@ HRESULT NCTiExmTrackerInterfaceExample::CreateTrialTracker(const NECAdinsIdtTiTr
 //----------------------------------------------------------------------------
 // Function NCTiExmTrackerInterfaceExample::CreateArenaTracker
 //----------------------------------------------------------------------------
-// Description  : create tracker on arena level
+// Description  : create tracker on arena level with images comming in on arena level
 // Note         : CComObject only supports default ctor; if ctor with argument
 //                is important use trick of Don Box in MSJ July 1997 'Q&A ActiveX / COM'
 //----------------------------------------------------------------------------
