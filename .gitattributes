@@ -2,7 +2,7 @@
 * text=auto
 
 # MIDL files shouldn't drive the language stats
-*.idl linguist-vendored
+*.idl linguist-language=C++
 
 # This project uses .h for C++ headers, not C
 *.h linguist-language=C++
